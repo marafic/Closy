@@ -114,7 +114,7 @@ button:focus-visible, .btn:focus-visible, .file-btn:focus-visible, .modal-close:
 
 /* Empty state styling */
 .empty-closet{background:#fff;border-radius:14px;padding:60px 24px;box-shadow:var(--card-shadow);text-align:center;margin-bottom:40px}
-.empty-text{color:#6b6b85;font-size:18px;margin-bottom:18px;white-space:nowrap}
+.empty-text{color:#6b6b85;font-size:clamp(14px,4vw,18px);margin-bottom:18px}
 
 /* Planner specific styles */
 .welcome-panel{background:linear-gradient(90deg,#f9ecff 0%, #e8fbff 100%);padding:26px;border-radius:14px;box-shadow:var(--card-shadow);margin-bottom:24px}
