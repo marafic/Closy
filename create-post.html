@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+  <!-- HEAD: Meta tags, viewport configuration, and global stylesheet -->
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Closy — Create Post</title>
+    <link rel="stylesheet" href="styles/styles.css" />
+  </head>
+  <body>
+    <div class="page">
+    <!-- HEADER: Logo injected by header.js + navigation tabs -->
+    <!-- #site-header: Populated with Closy logo and brand by header.js -->
+    <!-- Navigation: Feed tab marked as active (post creation is part of feed functionality) -->
+    <header class="top">
+      <div class="logo-wrap">
+      <div id="site-header"></div>
+      </div>
+
+        <nav class="tabs">
+          <a class="tab" href="overview.html">Overview</a>
+          <a class="tab" href="my-closet.html">My Closet</a>
+          <a class="tab" href="planner.html">Planner</a>
+          <a class="tab" href="outfits.html">Outfits</a>
+          <a class="tab active" href="feed.html">Feed</a>
+        </nav>
+      </header>
+    <!-- Header script: Injects logo and brand into #site-header -->
+    <script src="header.js"></script>
+
+      <main class="container">
+        <div style="max-width:900px;margin:0 auto;">
+          <!-- PAGE HEADER: Back button to feed + page title -->
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+            <button onclick="window.location.href='feed.html'" style="background:transparent;border:0;font-size:24px;cursor:pointer;padding:8px;">←</button>
+            <h2 style="margin:0;font-size:24px;">Create New Post</h2>
+          </div>
+
+          <!-- POST CREATION FORM: Styled as post-card for visual consistency -->
+          <article class="post-card">
+            <form id="create-post-form">
+              <div class="post-main">
+                <!-- MAIN IMAGE UPLOAD: Click to upload outfit photo -->
+                <!-- #main-image-container: Clickable area that triggers hidden file input -->
+                <!-- Shows gradient placeholder until image selected -->
+                <!-- Preview displayed after file selection via FileReader -->
+                <div class="post-thumb" id="main-image-container" style="cursor:pointer;width:433px;height:433px;overflow:hidden;border-radius:12px;">
+                  <div style="width:100%;height:100%;background:linear-gradient(90deg,#8b4cff,#ff4fc2);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;font-weight:600;">
+                    Click to upload photo
+                  </div>
+                  <input type="file" id="post-file-input" class="file-input" accept="image/*" style="display:none;" />
+                </div>
+
+                <!-- ITEM SELECTION: Choose up to 6 items from closet to include in post -->
+                <!-- Choose Items button: Opens modal with closet items (handled by inline JavaScript) -->
+                <!-- #selected-items-grid: 3x2 grid showing selected items or placeholder slots -->
+                <div class="post-items-section" style="display:flex;flex-direction:column;height:400px;gap:0;">
+                  <div class="post-items-header" style="margin-bottom:8px;height:20px;flex-shrink:0;">Items in this outfit</div>
+                  <button type="button" class="btn file-btn" id="choose-items-btn" style="margin-bottom:12px;height:36px;flex-shrink:0;">Choose Items (max 6)</button>
+                  <div class="post-items-grid" id="selected-items-grid" style="grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);height:360px;">
+                    <div style="background:#f9f9fb;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#7b7b95;font-size:14px;border:2px dashed #ddd;">
+                      No items selected
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- POST TEXT: Title and description fields -->
+              <!-- Title: Required text input for post heading -->
+              <!-- Description: Optional textarea for outfit details -->
+              <div class="post-text">
+                <label class="field">
+                  <div class="field-label">Title</div>
+                  <input name="title" placeholder="e.g., Autumn Layers" class="input" required style="width:100%;" />
+                </label>
+
+                <label class="field" style="margin-top:16px;">
+                  <div class="field-label">Description</div>
+                  <textarea name="description" placeholder="Tell us about your outfit..." class="input textarea" rows="4" style="width:100%;resize:none;"></textarea>
+                </label>
+
+                <!-- FORM ACTIONS: Cancel returns to feed, Post submits form -->
+                <div style="display:flex;gap:12px;margin-top:24px;justify-content:flex-end;">
+                  <button type="button" class="btn cancel" onclick="window.location.href='feed.html'">Cancel</button>
+                  <button type="submit" class="btn primary">Post</button>
+                </div>
+              </div>
+            </form>
+          </article>
+        </div>
+      </main>
+
+      <!-- INLINE JAVASCRIPT: Post creation functionality -->
+      <!-- Handles: main image upload, item selection modal, form submission -->
+      <!-- Saves post to localStorage 'closy-user-posts-v1' and redirects to feed -->
+      <script>
+        // Wait for DOM to load before attaching event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+          // Get DOM elements for form interaction
+          var form = document.getElementById('create-post-form');
+          var fileInput = document.getElementById('post-file-input');
+          var mainImageContainer = document.getElementById('main-image-container');
+          var chooseItemsBtn = document.getElementById('choose-items-btn');
+          var selectedItemsGrid = document.getElementById('selected-items-grid');
+          // Track selected items from closet (max 6)
+          var selectedItems = [];
+
+          // === MAIN IMAGE UPLOAD ===
+          // Click on gradient placeholder triggers hidden file input
+          mainImageContainer.addEventListener('click', function() {
+            fileInput.click();
+          });
+
+          // Image preview after file selection
+          // Event: 'change' on file input
+          fileInput.addEventListener('change', function(e) {
+            var file = e.target.files[0];
+            // Validate image type
+            if (file && file.type.startsWith('image/')) {
+              // Use FileReader to convert image to base64 data URL
+              var reader = new FileReader();
+              reader.onload = function(event) {
+                // Replace gradient placeholder with actual image preview
+                mainImageContainer.innerHTML = '<img src="' + event.target.result + '" alt="main item" style="width:100%;height:100%;object-fit:cover;display:block;cursor:pointer;">';
+              };
+              reader.readAsDataURL(file);
+            }
+          });
+
+          // === ITEM SELECTION MODAL ===
+          // Opens modal displaying all closet items for selection (max 6)
+          // Event: Click on "Choose Items" button
+          chooseItemsBtn.addEventListener('click', function() {
+            // Load items from localStorage
+            var items = [];
+            try {
+              var raw = localStorage.getItem('closy-items-v1');
+              items = raw ? JSON.parse(raw) : [];
+            } catch (e) {
+              console.error('Error loading items', e);
+            }
+            
+            // Check if closet has items
+            if (items.length === 0) {
+              alert('No items in your closet. Add items in My Closet first!');
+              return;
+            }
+            
+            // Build modal HTML with all closet items
+            var selectionHTML = '<div style="position:fixed;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:2000;" id="item-selection-modal">' +
+              '<div style="background:#fff;border-radius:12px;padding:24px;max-width:600px;width:90%;max-height:80vh;overflow-y:auto;">' +
+              '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">' +
+              '<h3 style="margin:0;">Choose Items (max 6)</h3>' +
+              '<button onclick="document.getElementById(\'item-selection-modal\').remove();" style="background:transparent;border:0;font-size:20px;cursor:pointer;">✕</button>' +
+              '</div>' +
+              '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">';
+            
+            // Render each item as clickable card
+            // Selected items highlighted with purple border
+            items.forEach(function(item, index) {
+              var isSelected = selectedItems.some(function(si) { return si.id === item.id; });
+              var imgSrc = item.imageData || item.imageUrl || '';
+              selectionHTML += '<div style="border:2px solid ' + (isSelected ? '#8b4cff' : '#eee') + ';border-radius:10px;padding:8px;cursor:pointer;background:' + (isSelected ? '#f9f5ff' : '#fff') + ';" onclick="toggleItemSelection(' + index + ')">' +
+                '<img src="' + imgSrc + '" style="width:100%;height:100px;object-fit:cover;border-radius:8px;display:block;">' +
+                '<div style="margin-top:6px;font-size:13px;font-weight:600;">' + item.name + '</div>' +
+                '<div style="font-size:11px;color:#666;">' + item.category + '</div>' +
+                '</div>';
+            });
+            
+            // Add confirm button with hover effects
+            selectionHTML += '</div>' +
+              '<div style="margin-top:16px;text-align:right;">' +
+              '<button onclick="confirmItemSelection()" class="btn primary" style="cursor:pointer;transition:transform 0.2s ease,box-shadow 0.2s ease;" onmouseover="this.style.transform=\'scale(1.05)\'" onmouseout="this.style.transform=\'scale(1)\'" onmousedown="this.style.transform=\'scale(0.95)\'" onmouseup="this.style.transform=\'scale(1.05)\'">Confirm Selection</button>' +
+              '</div>' +
+              '</div></div>';
+            
+            // Insert modal into DOM
+            document.body.insertAdjacentHTML('beforeend', selectionHTML);
+          });
+          
+          // Toggle item selection (add or remove from selectedItems array)
+          // Global function called by onclick in modal
+          window.toggleItemSelection = function(index) {
+            // Reload items from localStorage
+            var items = [];
+            try {
+              var raw = localStorage.getItem('closy-items-v1');
+              items = raw ? JSON.parse(raw) : [];
+            } catch (e) {}
+            
+            var item = items[index];
+            var existingIndex = selectedItems.findIndex(function(si) { return si.id === item.id; });
+            
+            // If already selected, remove it
+            if (existingIndex > -1) {
+              selectedItems.splice(existingIndex, 1);
+            } else {
+              // If not selected, add it (max 6)
+              if (selectedItems.length >= 6) {
+                alert('Maximum 6 items allowed');
+                return;
+              }
+              selectedItems.push(item);
+            }
+            
+            // Close and reopen modal to show updated selection state
+            document.getElementById('item-selection-modal').remove();
+            chooseItemsBtn.click();
+          };
+          
+          // Confirm item selection and update grid display
+          // Global function called by confirm button in modal
+          window.confirmItemSelection = function() {
+            // Close modal
+            document.getElementById('item-selection-modal').remove();
+            
+            // If items selected, render them in 3x2 grid
+            if (selectedItems.length > 0) {
+              selectedItemsGrid.innerHTML = '';
+              
+              // Render each selected item as post-item-card
+              selectedItems.forEach(function(item) {
+                var imgSrc = item.imageData || item.imageUrl || '';
+                selectedItemsGrid.insertAdjacentHTML('beforeend',
+                  '<div class="post-item-card">' +
+                    '<div class="post-item-thumb">' +
+                      '<img src="' + imgSrc + '" alt="' + item.name + '" style="width:100%;height:100%;object-fit:cover;display:block;">' +
+                    '</div>' +
+                    '<div class="post-item-body">' +
+                      '<div class="post-item-name">' + item.name + '</div>' +
+                      '<div class="post-item-badges">' +
+                        '<span class="badge">' + item.category + '</span>' +
+                        '<span class="badge badge--muted">' + item.color + '</span>' +
+                      '</div>' +
+                    '</div>' +
+                  '</div>'
+                );
+              });
+              
+              // Fill remaining slots (up to 6 total) with empty placeholders
+              for (var i = selectedItems.length; i < 6; i++) {
+                selectedItemsGrid.insertAdjacentHTML('beforeend',
+                  '<div style="background:#f9f9fb;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#7b7b95;font-size:14px;border:2px dashed #ddd;">Empty</div>'
+                );
+              }
+            } else {
+              // No items selected - show placeholder
+              selectedItemsGrid.innerHTML = '<div style="background:#f9f9fb;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#7b7b95;font-size:14px;border:2px dashed #ddd;grid-column:1/-1;">No items selected</div>';
+            }
+          };
+
+          // === FORM SUBMISSION ===
+          // Create new post object and save to localStorage 'closy-user-posts-v1'
+          // Event: Submit on #create-post-form
+          form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form field values
+            var title = form.querySelector('[name="title"]').value;
+            var description = form.querySelector('[name="description"]').value;
+            
+            // Validate main image was uploaded
+            var mainImage = mainImageContainer.querySelector('img');
+            if (!mainImage) {
+              alert('Please upload a photo first!');
+              return;
+            }
+            var mainImageSrc = mainImage.src;
+            
+            // Load existing posts from localStorage
+            var posts = [];
+            try {
+              var rawPosts = localStorage.getItem('closy-user-posts-v1');
+              posts = rawPosts ? JSON.parse(rawPosts) : [];
+            } catch (e) {
+              console.error('Error loading posts', e);
+              posts = [];
+            }
+            
+            // Create new post object with all details
+            // Uses hardcoded user info (Mara) - could be extended with login system
+            var newPost = {
+              id: 'user-post-' + Date.now(),
+              authorId: 'mara',
+              author: 'Mara',
+              username: 'mara.nlx',
+              avatar: 'https://i.pravatar.cc/120?img=20',
+              title: title,
+              description: description,
+              image: mainImageSrc,
+              likes: 0,
+              items: selectedItems.map(function(item) {
+                return {
+                  name: item.name,
+                  category: item.category,
+                  color: item.color,
+                  image: item.imageData || item.imageUrl || ''
+                };
+              }),
+              createdAt: Date.now()
+            };
+            
+            // Add new post to beginning (most recent first)
+            posts.unshift(newPost);
+            
+            // Save updated posts array to localStorage
+            try {
+              console.log('Saving post:', newPost);
+              localStorage.setItem('closy-user-posts-v1', JSON.stringify(posts));
+              console.log('Successfully saved. All posts:', posts);
+            } catch (e) {
+              console.error('Error saving post', e);
+              alert('Error saving post. Please try again.');
+              return;
+            }
+            
+            // Redirect to feed to see newly created post
+            window.location.href = 'feed.html';
+          });
+        });
+      </script>
+
+    </div>
+  </body>
+</html>

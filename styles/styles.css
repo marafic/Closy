@@ -1,0 +1,425 @@
+/* Screenshot mock styles - plain CSS (renamed to styles.css) */
+
+/* Global CSS variables */
+:root{
+  --page-gradient: linear-gradient(180deg,#f8eefe 0%, #f6ecff 30%, #eef8ff 100%);
+  --card-radius: 12px;
+  --card-shadow: 0 14px 30px rgba(16,24,40,0.06);
+  --muted: #7b7b95;
+}
+
+/* Global reset and body styles */
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;color:#222;background:var(--page-gradient);min-height:100vh}
+
+/* Top section: logo and brand */
+.top{padding:clamp(32px,5vw,48px) 16px 12px;text-align:center}
+.logo-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+.logo-mark{width:clamp(56px,10vw,68px);height:clamp(56px,10vw,68px)}
+.brand-name{color:#8b4cff;font-weight:600;font-size:clamp(16px,3vw,18px)}
+.brand-tag{color:var(--muted);font-size:13px}
+
+/* Navigation tabs */
+.tabs{display:flex;flex-wrap:wrap;justify-content:center;margin-top:22px;background:rgba(255,255,255,0.95);border-radius:999px;padding:clamp(4px,1vw,6px);box-shadow:0 10px 20px rgba(0,0,0,0.06);max-width:100%;gap:4px}
+.tab{border:0;background:transparent;padding:clamp(8px,1.5vw,10px) clamp(12px,2.5vw,18px);border-radius:999px;font-weight:600;color:#333;cursor:pointer;text-decoration:none;font-size:clamp(13px,2vw,14px);white-space:nowrap}
+.tab.active{background:#fff;box-shadow:0 8px 18px rgba(0,0,0,0.06)}
+
+/* Main container */
+.container{max-width:1180px;margin:clamp(20px,3vw,28px) auto;padding:0 clamp(16px,2vw,20px)}
+
+/* Overview stats cards */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-bottom:24px}
+.card{padding:20px;border-radius:var(--card-radius);box-shadow:var(--card-shadow);min-height:130px;display:flex;flex-direction:column;justify-content:flex-start}
+.card-top{display:flex;align-items:center;gap:10px;color:#6d3bd6;font-weight:600}
+.card-value{font-size:34px;color:#5a21b8;margin-top:12px}
+.card-sub{font-size:13px;color:#7c6f9d;margin-top:8px}
+
+/* Card color variants */
+.card--lavender{background:linear-gradient(180deg,#efe7ff,#f6f0ff)}
+.card--pink{background:linear-gradient(180deg,#ffe8f5,#ffdff5)}
+.card--blue{background:linear-gradient(180deg,#dff6ff,#d2f0ff)}
+.card--mint{background:linear-gradient(180deg,#dfffee,#ccffea)}
+
+/* Panels for saved outfits and upcoming events */
+.panels{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.panel{background:#fff;border-radius:14px;padding:28px;box-shadow:var(--card-shadow);min-height:220px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;text-align:left}
+.panel h3{align-self:flex-start;margin:0 0 10px 0;font-weight:600}
+.empty-illustration{font-size:40px;margin:18px 0}
+.panel-msg{color:#6b6b85;margin:8px 0 0}
+.panel-sub{color:#9aa0b5;margin:6px 0 0;font-size:13px}
+
+/* Closet card: white box matching other panels */
+.closet-card{background:#fff;border-radius:14px;padding:18px 20px;box-shadow:var(--card-shadow);margin-bottom:24px}
+.closet-card .closet-meta{font-weight:700;color:#333;margin-bottom:12px}
+.closet-card .empty-closet{background:transparent;box-shadow:none;padding:28px 12px;margin:0;color:#6b6b85;text-align:left}
+.closet-card .empty-text{margin:6px 0}
+
+/* Responsive */
+@media (max-width:1000px){
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .panels{grid-template-columns:1fr}
+}
+
+/* Filter bar and empty closet styles */
+.filter-bar{background:#fff;border-radius:12px;padding:10px 14px;display:flex;align-items:center;box-shadow:var(--card-shadow);margin-bottom:26px;gap:12px;flex-wrap:nowrap}
+.filter-left{display:flex;align-items:center;gap:8px;flex-shrink:1;min-width:0;overflow:hidden}
+.filter-right{display:flex;align-items:center;flex-shrink:0;margin-left:auto}
+.filter-icon{color:#8b4cff;font-size:18px;flex-shrink:0}
+.filter-select{background:#f3f3f6;border:0;padding:8px 10px;border-radius:8px;color:#666;cursor:pointer;transition:background 0.2s ease,transform 0.1s ease;width:110px;font-size:14px;flex-shrink:1;min-width:80px}
+.filter-select:hover{background:#e9e9ee;transform:translateY(-1px)}
+.filter-select:active{transform:translateY(0)}
+.filter-select:focus{outline:2px solid #8b4cff;outline-offset:2px}
+
+/* Make left/right filter dropdowns equal width on the filter bar */
+.filter-bar .filter-select{width:110px;min-width:80px}
+.filter-bar .btn.add-btn{white-space:nowrap;flex-shrink:0}
+
+@media (max-width:650px){
+  .filter-bar{padding:10px 12px;gap:10px}
+  .filter-left{gap:6px}
+  .filter-select{padding:8px;font-size:13px;width:100px;min-width:75px}
+}
+
+@media (max-width:550px){
+  .filter-bar{padding:9px 11px;gap:8px}
+  .filter-left{gap:5px}
+  .filter-select{padding:7px 6px;width:90px;font-size:13px;min-width:70px}
+  .filter-icon{font-size:16px}
+}
+
+@media (max-width:480px){
+  .filter-bar{flex-direction:column;align-items:stretch;gap:10px;padding:12px 14px}
+  .filter-left{width:100%;justify-content:flex-start;gap:8px;overflow:visible}
+  .filter-right{width:100%;margin-left:0}
+  .filter-right .btn.add-btn{width:100%}
+  .filter-bar .filter-select{flex:1;width:auto;padding:9px 10px;font-size:14px;min-width:100px}
+  .filter-icon{font-size:18px}
+}
+
+/* Button styles */
+.btn{display:inline-block;padding:10px 16px;border-radius:10px;text-decoration:none;color:#fff;font-weight:600;border:0;background-clip:padding-box}
+.btn, button, .file-btn, .modal-close {border: none}
+.btn:focus, button:focus, .file-btn:focus, .modal-close:focus {outline: none}
+/* show an accessible visible focus ring only when navigating with keyboard */
+button:focus-visible, .btn:focus-visible, .file-btn:focus-visible, .modal-close:focus-visible {
+  box-shadow: 0 0 0 4px rgba(139,76,255,0.16);
+  border-radius: 10px;
+}
+.btn.add-btn{background:linear-gradient(90deg,#8b4cff,#ff4fc2);box-shadow:0 8px 20px rgba(139,76,255,0.18);display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;height:36px;min-width:64px;border-radius:12px;font-size:14px;white-space:nowrap;transition:transform 0.1s ease, box-shadow 0.1s ease;cursor:pointer}
+.btn.add-btn:hover{transform:scale(1.05);box-shadow:0 10px 24px rgba(139,76,255,0.25)}
+.btn.add-btn:active{transform:scale(0.95);box-shadow:0 4px 12px rgba(139,76,255,0.15)}
+.btn.primary{background:linear-gradient(90deg,#8b4cff,#ff4fc2);padding:12px 18px;transition:transform 0.1s ease, box-shadow 0.1s ease;box-shadow:0 8px 20px rgba(139,76,255,0.18);cursor:pointer}
+.btn.primary:hover{transform:scale(1.05);box-shadow:0 10px 24px rgba(139,76,255,0.25)}
+.btn.primary:active{transform:scale(0.95);box-shadow:0 4px 12px rgba(139,76,255,0.15)}
+
+/* Empty state styling */
+.empty-closet{background:#fff;border-radius:14px;padding:60px 24px;box-shadow:var(--card-shadow);text-align:center;margin-bottom:40px}
+.empty-text{color:#6b6b85;font-size:18px;margin-bottom:18px;white-space:nowrap}
+
+/* Planner specific styles */
+.welcome-panel{background:linear-gradient(90deg,#f9ecff 0%, #e8fbff 100%);padding:26px;border-radius:14px;box-shadow:var(--card-shadow);margin-bottom:24px}
+.welcome-panel h3{margin:0 0 8px;font-weight:700}
+.welcome-panel .lead{color:#5b5b76;margin:8px 0 18px}
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.step-card{background:rgba(255,255,255,0.9);padding:18px;border-radius:12px;box-shadow:0 8px 18px rgba(16,24,40,0.04)}
+.step-emoji{font-size:22px}
+.step-title{font-weight:600;margin-top:8px}
+.step-sub{color:#7b7b95;margin-top:6px;font-size:13px}
+
+/* Current Outfit panel (empty state) */
+.current-outfit{background:linear-gradient(90deg,#f9ecff 0%, #e8fbff 100%);padding:28px;border-radius:14px;box-shadow:var(--card-shadow);margin-bottom:24px;min-height:160px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.current-outfit h3{margin:0 0 8px 0;color:#8b4cff;font-weight:600}
+.current-outfit .current-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px 12px;width:100%}
+.current-outfit .empty-illustration{font-size:40px;color:rgba(139,76,255,0.18);margin-bottom:8px}
+.current-outfit .panel-msg{align-self:center;color:#6b6b85;margin-top:6px;font-size:15px}
+.current-outfit .panel-sub{align-self:center;color:#9aa0b5;font-size:13px;margin-top:6px}
+
+/* Outfit bar for selected items in planner */
+.current-outfit .outfit-bar{display:flex;gap:10px;flex-wrap:wrap;width:100%;margin-bottom:10px}
+.current-outfit .outfit-thumb{width:88px;height:110px;border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 10px 24px rgba(16,24,40,0.06);display:flex;flex-direction:column}
+.current-outfit .outfit-thumb img{width:100%;height:80px;object-fit:cover;display:block}
+.current-outfit .outfit-thumb .thumb-name{font-size:12px;padding:6px;text-align:center;color:#333}
+.current-outfit .outfit-thumb .thumb-remove{position:relative;top:-6px;right:-6px;margin-left:auto;background:transparent;border:0;color:#b33;font-weight:700;cursor:pointer}
+
+/* Planner items grid (reuses closet item styles) */
+#planner-clothing{display:flex;flex-wrap:wrap;gap:clamp(8px, 1.5vw, 12px);margin-top:12px;width:100%}
+#planner-clothing .item{flex:0 0 clamp(140px,15vw,160px);max-width:160px;width:100%}
+/* Planner items should match My Closet item width */
+#planner-clothing .item{width:100%}
+
+/* Make outfit-bar thumbnails use the same item card formatting as planner items */
+.current-outfit .outfit-bar{display:flex;flex-wrap:wrap;gap:10px;width:100%;margin-bottom:12px}
+.current-outfit .outfit-bar .item{width:clamp(120px,15vw,160px);max-width:160px;margin:0}
+.current-outfit .outfit-bar .item-thumb{height:120px}
+.current-outfit .outfit-bar .item-body{padding:10px 12px}
+.current-outfit .outfit-bar .item-name{font-size:13px}
+.current-outfit .outfit-bar .item-delete{padding:4px}
+
+/* Ensure planner Add buttons keep the compact height and do not wrap text */
+.item-add.btn.add-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 14px;
+  height:36px;
+  min-width:64px;
+  white-space:nowrap;
+  border-radius:12px;
+  font-size:14px;
+}
+
+/* Planner tips panel */
+.tips-panel{background:#fff;border-radius:14px;padding:28px;box-shadow:var(--card-shadow);margin-top:20px}
+.tips-list{margin:8px 0 0 18px;color:#4b4b66}
+.tips-list li{margin:10px 0}
+
+@media (max-width:900px){
+  .steps-grid{grid-template-columns:1fr}
+}
+
+/* Outfits page styles */
+.outfits-hero{background:linear-gradient(90deg,#f9ecff 0%, #e8fbff 100%);padding:10px 26px 26px 26px;border-radius:14px;box-shadow:var(--card-shadow);margin-bottom:24px}
+.outfits-cards{display:flex;gap:18px;margin-top:18px}
+.mini-card{background:rgba(255,255,255,0.9);padding:18px;border-radius:12px;flex:1;box-shadow:0 8px 18px rgba(16,24,40,0.04)}
+.mini-icon{font-size:20px}
+.mini-title{font-weight:600;margin-top:8px}
+.mini-sub{color:#7b7b95;margin-top:6px;font-size:13px}
+
+/* Saved outfits grid */
+.saved-outfit-grid{display:grid;grid-template-columns:1fr;gap:18px;margin-top:14px}
+.saved-outfit-card{background:#fff;border-radius:12px;padding:14px;box-shadow:var(--card-shadow)}
+.saved-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.saved-title{font-weight:700;color:#333}
+.saved-meta{color:#7b7b95;font-size:13px;margin-bottom:12px}
+.saved-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,160px));gap:12px}
+.saved-thumb{width:100%;border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 8px 18px rgba(16,24,40,0.04);text-align:center}
+.saved-thumb img{width:100%;height:110px;object-fit:cover;display:block}
+.saved-thumb .thumb-name{font-size:13px;padding:8px;color:#333}
+.saved-actions button{background:transparent;border:0;cursor:pointer;margin-left:8px}
+
+/* Category breakdown bars */
+.category-breakdown{width:100%;padding:0}
+.cat-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.cat-label{min-width:90px;font-size:14px;color:#333;font-weight:500}
+.cat-bar{flex:1;height:20px;background:#e9e9ee;border-radius:10px;overflow:hidden}
+.cat-fill{height:100%;background:linear-gradient(90deg,#b589ff,#ff89d4);border-radius:10px;transition:width 0.3s ease}
+.cat-count{min-width:24px;text-align:right;font-size:14px;color:#333;font-weight:600}
+
+/* Style insights panel (personalized tips) */
+.style-insights{background:linear-gradient(90deg,#f9ecff 0%, #e8fbff 100%);padding:20px 26px;border-radius:14px;box-shadow:var(--card-shadow);margin-top:24px}
+.style-insights h3{margin:0 0 12px 0;color:#8b4cff;font-weight:600;font-size:16px}
+.insights-text{color:#5b5b76;margin:0;font-size:15px;line-height:1.5}
+
+/* Outfit ideas panel */
+.ideas-panel{background:#fff;border-radius:14px;padding:22px;box-shadow:var(--card-shadow);margin-top:18px}
+.ideas-grid{display:flex;gap:18px;padding:12px 0}
+.idea-card{flex:1;border-radius:10px;padding:18px;border:2px dashed rgba(139,76,255,0.25);background:transparent}
+.idea-title{color:#6e2cff;font-weight:600;margin-bottom:6px}
+.idea-sub{color:#6b6b85;font-size:13px}
+
+@media (max-width:768px){
+  .ideas-grid{flex-direction:column}
+  .cat-label{min-width:70px;font-size:13px}
+}
+
+/* Call-to-action banner */
+.cta-banner{background:linear-gradient(90deg,#fff0fb 0%, #f0fbff 100%);padding:26px;border-radius:14px;box-shadow:var(--card-shadow);margin-top:22px;text-align:center}
+.cta-text{font-weight:600;color:#555;margin-bottom:8px}
+.cta-sub{color:#8b8b9f}
+
+@media (max-width:900px){
+  .outfits-cards{flex-direction:column}
+  .ideas-grid{flex-direction:column}
+}
+
+/* Modal styles for Add Item */
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:1200}
+.modal[aria-hidden="false"]{display:flex}
+.modal-sheet{position:relative;background:#fff;border-radius:16px;max-width:580px;width:94%;padding:32px;z-index:2;box-shadow:0 20px 60px rgba(0,0,0,0.2);max-height:80vh;overflow-y:auto}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.modal-header h3{margin:0;font-size:22px;font-weight:600}
+.modal-close{background:transparent;border:0;font-size:24px;cursor:pointer;padding:6px;color:#666;transition:color 0.2s}
+.modal-close:hover{color:#000}
+.modal-sub{color:#6b6b85;margin:8px 0 20px;font-size:14px}
+.modal-form .field{margin-bottom:18px}
+.field-label{font-size:14px;color:#333;margin-bottom:8px;font-weight:500}
+.input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid #e0e0e8;background:#fafafa;font-size:14px;transition:border-color 0.2s}
+.input:focus{border-color:#8b4cff;background:#fff}
+select.input[size]{padding:8px;height:auto}
+
+/* Custom Dropdown Styles */
+.custom-dropdown{position:relative;width:100%}
+.custom-dropdown-toggle{display:flex;justify-content:space-between;align-items:center;text-align:left;cursor:pointer;position:relative}
+.custom-dropdown-toggle:hover{border-color:#c0c0d0}
+.custom-dropdown-arrow{transition:transform 0.2s ease;flex-shrink:0;margin-left:8px}
+.custom-dropdown.open .custom-dropdown-arrow{transform:rotate(180deg)}
+.custom-dropdown.open .custom-dropdown-toggle{border-color:#8b4cff;background:#fff}
+.custom-dropdown-menu{position:absolute;top:calc(100% + 4px);left:0;width:100%;background:#fff;border:1px solid #e0e0e8;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.12);max-height:200px;overflow-y:auto;z-index:1000;display:none}
+.custom-dropdown.open .custom-dropdown-menu{display:block}
+.custom-dropdown-option{padding:10px 14px;cursor:pointer;transition:background 0.15s ease;font-size:14px;color:#333}
+.custom-dropdown-option:hover{background:#f5f5f8}
+.custom-dropdown-option:first-child{border-radius:10px 10px 0 0}
+.custom-dropdown-option:last-child{border-radius:0 0 10px 10px}
+.custom-dropdown-option.selected{background:#f0e7ff;color:#8b4cff;font-weight:500}
+
+.upload-row{display:flex;flex-direction:column;gap:12px;align-items:stretch}
+.file-input{display:none}
+.file-btn{background:linear-gradient(90deg,#8b4cff,#ff4fc2);color:white;padding:12px 16px;border-radius:10px;border:0;cursor:pointer;font-size:14px;font-weight:500;transition:transform 0.1s ease, box-shadow 0.1s ease;box-shadow:0 4px 12px rgba(139,76,255,0.2)}
+.file-btn:hover{transform:scale(1.02);box-shadow:0 6px 16px rgba(139,76,255,0.3)}
+.file-btn:active{transform:scale(0.98);box-shadow:0 2px 8px rgba(139,76,255,0.15)}
+#image-preview{margin-top:12px;display:none;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);max-width:200px}
+#image-preview img{width:100%;height:auto;max-height:120px;object-fit:cover;display:block}
+.or{text-align:center;color:#c1c1cc;margin:10px 0}
+.field-note{font-size:12px;color:#9aa0b5;margin-top:8px}
+.seasons label{display:inline-flex;gap:8px;align-items:center;margin-right:16px;font-size:14px;cursor:pointer}
+.seasons input[type="checkbox"]{width:18px;height:18px;cursor:pointer}
+.modal-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:24px}
+.btn.cancel{background:#f3f3f6;color:#333;border:none;padding:12px 20px;border-radius:10px;font-weight:500;transition:background 0.2s;cursor:pointer}
+.btn.cancel:hover{background:#e9e9ee}
+
+@media (max-width:480px){
+  .modal-sheet{padding:14px}
+  .file-btn{padding:8px}
+}
+
+/* Closet grid and items */
+#clothing {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(8px, 1.5vw, 12px);
+  margin-top: 12px;
+}
+
+.item {
+  width: clamp(140px, 15vw, 168px);
+  max-width: 168px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 14px 30px rgba(16,24,40,0.06);
+}
+
+.item-thumb{height:clamp(120px, 20vw, 140px);border-top-left-radius:12px;border-top-right-radius:12px;overflow:hidden;background:linear-gradient(135deg,#f2dfff,#dff6ff)}
+.item-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+
+.item-body{padding:clamp(10px, 1.5vw, 12px) clamp(12px, 2vw, 14px);display:flex;flex-direction:column;gap:clamp(6px, 1vw, 8px)}
+.item-row{display:flex;align-items:center;justify-content:space-between}
+.item-name{font-weight:700;color:#111;font-size:clamp(13px, 2.2vw, 15px)}
+.item-badges{display:flex;gap:clamp(6px, 1vw, 8px);flex-wrap:wrap}
+.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#f3e8ff;color:#6e2cff;font-weight:700;font-size:12px}
+.badge--muted{background:#fff0fb;border:1px solid rgba(139,76,255,0.08);color:#6e2cff}
+.item-seasons{color:#8b8b9f;font-size:12px;margin-top:4px}
+.item-delete{background:transparent;border:0;color:#111;font-weight:700;cursor:pointer;border-radius:6px;padding:6px}
+.item-delete:focus-visible{box-shadow:0 0 0 4px rgba(255,79,194,0.12)}
+
+/* message shown when outfit limit is reached */
+.outfit-msg{margin-top:10px;background:linear-gradient(90deg,#fff0fb,#f0fbff);padding:8px 12px;border-radius:10px;color:#6b3bd8;font-weight:600;align-self:center;transition:opacity .3s ease}
+.outfit-msg.fade{opacity:0}
+
+/* disabled state for add buttons */
+.item-add[disabled]{opacity:0.6;cursor:not-allowed;pointer-events:none}
+
+/* Save button row under outfit items */
+.current-outfit .save-row{width:100%;display:flex;justify-content:center;margin-top:12px}
+@media (max-width:480px){
+  .current-outfit .save-row{padding:0 12px}
+  .current-outfit .save-row .btn{width:100%}
+}
+
+/* Save-row: name input + save button */
+.current-outfit .save-row{flex-direction:column;align-items:stretch}
+.current-outfit .save-row .save-label{font-size:13px;color:#3a235f;margin-bottom:6px;font-weight:600}
+.current-outfit .save-row .save-controls{display:flex;gap:12px;align-items:center}
+.current-outfit .save-row .outfit-name{flex:1;border-radius:12px;padding:10px 14px;border:1px solid rgba(0,0,0,0.06);background:rgba(255,255,255,0.95)}
+.current-outfit .save-row .outfit-name::placeholder{color:#b9b9c8}
+@media (max-width:480px){
+  .current-outfit .save-row .save-controls{flex-direction:column}
+  .current-outfit .save-row .save-controls .btn{width:100%}
+}
+
+/* Feed / Post card styles */
+.feed-tabs{display:flex;gap:clamp(8px,2vw,12px);margin-bottom:16px;flex-wrap:wrap}
+.feed-tab{padding:clamp(6px,1.5vw,8px) clamp(12px,2.5vw,14px);border-radius:999px;background:rgba(255,255,255,0.9);font-weight:600;color:#333;text-decoration:none;font-size:clamp(13px,2vw,14px);white-space:nowrap}
+.feed-tab.active{background:#fff;box-shadow:0 8px 18px rgba(0,0,0,0.06)}
+
+.post-card{background:#fff;border-radius:14px;padding:clamp(16px,3vw,22px);box-shadow:var(--card-shadow);margin:0 auto clamp(24px,4vw,34px);max-width:1020px}
+.post-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:clamp(14px,2.5vw,18px);flex-wrap:wrap;gap:clamp(8px,1.5vw,12px)}
+.post-author{display:flex;align-items:center;gap:clamp(8px,1.5vw,12px)}
+.avatar{width:clamp(40px,7vw,48px);height:clamp(40px,7vw,48px);border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(16,24,40,0.06);background:linear-gradient(90deg,#fff,#fff)}
+.avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.author-meta .author-name{font-weight:600}
+.post-date{font-size:13px;color:var(--muted)}
+.btn.follow-btn{background:linear-gradient(90deg,#8b4cff,#ff4fc2);color:#fff;border:none;padding:8px 16px;border-radius:10px;font-weight:500;cursor:pointer;pointer-events:auto;position:relative;z-index:10;transition:transform 0.1s ease, box-shadow 0.1s ease;box-shadow:0 4px 12px rgba(139,76,255,0.2)}
+.btn.follow-btn:hover{transform:scale(1.05);box-shadow:0 6px 16px rgba(139,76,255,0.3)}
+.btn.follow-btn:active{transform:scale(0.95);box-shadow:0 2px 8px rgba(139,76,255,0.15)}
+
+/* Post media grid (3-column layout for images) */
+.post-media-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}
+.post-media-grid .media img{width:100%;height:160px;object-fit:cover;border-radius:12px;display:block}
+
+/* Post main layout: image and text */
+.post-main{display:flex;gap:clamp(12px,2.5vw,18px);align-items:flex-start;flex-wrap:wrap}
+.post-thumb{flex-shrink:0;max-width:min(493px,100%);width:min(493px,100%)}
+.post-thumb img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:12px;display:block}
+.post-text{flex:1;min-width:280px}
+.post-title{margin:0 0 8px;font-size:18px;font-weight:700;color:#111}
+.post-desc{margin:0 0 12px;color:var(--muted)}
+.post-sep{border:0;border-top:1px solid #eee;margin:12px 0}
+.post-actions{display:flex;gap:18px;align-items:center}
+.action{display:inline-flex;gap:8px;align-items:center;background:transparent;border:0;color:#111;font-weight:600;cursor:pointer;padding:6px 8px;border-radius:8px}
+.action .count{margin-left:6px;font-weight:600}
+.action.like.liked{color:#8b4cff}
+.action.like.liked svg path{fill:#8b4cff;stroke:#8b4cff}
+.action.like{transition:color 0.2s ease}
+.action.like svg{transition:all 0.2s ease}
+
+/* Stacked variant: image on top, text below (used for selected posts) */
+.post-main.stacked{flex-direction:column}
+.post-main.stacked .post-thumb img{width:100%;height:auto;max-width:420px;border-radius:12px}
+.post-main.stacked .post-thumb{margin-bottom:14px}
+
+/* Post items section - shows clothing items next to the main image */
+.post-items-section{width:100%;display:flex;flex-direction:column;gap:clamp(8px,1.5vw,12px);flex-shrink:0}
+.post-items-header{font-weight:600;color:#333;font-size:clamp(13px,2vw,14px);margin-bottom:4px}
+.post-items-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(8px,1.5vw,12px);width:100%;grid-auto-rows:auto}
+
+@media (min-width:900px){
+  .post-items-section{max-width:min(400px,100%)}
+}
+
+@media (max-width:899px){
+  .post-main{gap:clamp(12px,2.5vw,18px)}
+}
+
+/* Individual post item cards */
+.post-item-card{background:#f9f9fb;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 4px 12px rgba(16,24,40,0.04);transition:transform 0.2s ease,box-shadow 0.2s ease;height:100%}
+.post-item-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(16,24,40,0.08)}
+.post-item-thumb{flex:1;min-height:clamp(60px,12vw,80px);overflow:hidden;background:linear-gradient(135deg,#f2dfff,#dff6ff)}
+.post-item-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.post-item-body{padding:clamp(6px,1.2vw,8px) clamp(8px,1.5vw,10px);display:flex;flex-direction:column;gap:4px;flex-shrink:0}
+.post-item-name{font-weight:600;color:#111;font-size:clamp(11px,1.8vw,12px)}
+.post-item-badges{display:flex;gap:4px;flex-wrap:wrap}
+
+/* Post text section */
+.post-text{margin-top:clamp(12px,2vw,18px)}
+
+/* Floating Add Button */
+.floating-add-btn{position:fixed;bottom:clamp(24px,4vw,32px);right:clamp(24px,4vw,32px);width:clamp(48px,8vw,56px);height:clamp(48px,8vw,56px);border-radius:50%;background:linear-gradient(90deg,#8b4cff,#ff4fc2);color:#fff;border:0;font-size:clamp(24px,5vw,32px);font-weight:300;line-height:1;cursor:pointer;box-shadow:0 12px 32px rgba(139,76,255,0.3);z-index:1000;display:flex;align-items:center;justify-content:center;transition:transform 0.2s ease,box-shadow 0.2s ease}
+.floating-add-btn:hover{transform:scale(1.08);box-shadow:0 16px 40px rgba(139,76,255,0.4)}
+.floating-add-btn:active{transform:scale(0.95)}
+
+/* Image preview in modal for post creation */
+.post-image-preview{margin-top:12px;border-radius:12px;overflow:hidden;max-width:100%}
+.post-image-preview img{width:100%;max-height:300px;object-fit:contain;display:block;border-radius:12px}
+.textarea{min-height:80px;resize:vertical;font-family:inherit}
+
+/* Friends list */
+.friends-list{display:flex;flex-direction:column;gap:16px}
+.friend-card{background:#fff;border-radius:14px;padding:20px 24px;box-shadow:var(--card-shadow);display:flex;justify-content:space-between;align-items:center}
+.friend-info{display:flex;align-items:center;gap:16px}
+.friend-name{font-weight:600;font-size:16px;color:#111}
+.follow-btn.following-btn{background:#f3f3f6;color:#333;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;box-shadow:none;border-radius:10px;font-weight:500;cursor:pointer;transition:background 0.2s}
+.follow-btn.following-btn:hover{background:#e9e9ee;transform:none;box-shadow:none}
+.follow-btn.following-btn:active{transform:none;box-shadow:none}

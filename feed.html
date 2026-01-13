@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Meta tags and styles -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Closy — Feed</title>
+    <link rel="stylesheet" href="styles/styles.css?v=2" />
+  </head>
+  <body>
+    <div class="page">
+    <!-- Header: Logo and main navigation -->
+    <header class="top">
+      <!-- Logo injected by header.js -->
+      <div id="site-header"></div>
+
+        <!-- Main navigation tabs -->
+        <nav class="tabs">
+          <a class="tab" href="overview.html">Overview</a>
+          <a class="tab" href="my-closet.html">My Closet</a>
+          <a class="tab" href="planner.html">Planner</a>
+          <a class="tab" href="outfits.html">Outfits</a>
+          <a class="tab active" href="feed.html">Feed</a>
+        </nav>
+      </header>
+    <script src="header.js"></script>
+
+      <main class="container">
+        <!-- Feed navigation: switches between different feed views -->
+        <div class="feed-tabs">
+          <a class="feed-tab active" href="feed.html">All Posts</a>
+          <a class="feed-tab" href="feed-following.html">Following</a>
+          <a class="feed-tab" href="feed-friends.html">Friends</a>
+          <a class="feed-tab" href="my-profile.html">My Profile</a>
+        </div>
+
+        <!-- Container for dynamically created user posts -->
+        <div id="user-posts-container"></div>
+
+        <!-- Post 1: Yarah's Autumn Layers outfit -->
+        <article class="post-card">
+          <!-- Post header: author info and follow button -->
+          <header class="post-header">
+            <div class="post-author">
+              <div class="avatar" aria-hidden="true">
+                <img src="https://i.pravatar.cc/120?img=5" alt="Yarah's profile avatar" />
+              </div>
+              <div class="author-meta">
+                <div class="author-name">Yarah</div>
+                <div class="post-date">yarah_mw</div>
+              </div>
+            </div>
+            <button class="btn follow-btn" data-user-id="user1" data-user-name="Yarah">Follow</button>
+          </header>
+
+          <!-- Main content: outfit image and clothing items -->
+          <div class="post-main">
+            <!-- Main outfit image (493x493px) -->
+            <div class="post-thumb"><img src="Bilder/fit1.jpg" alt="main item"></div>
+
+            <!-- Individual clothing items in this outfit -->
+            <div class="post-items-section">
+              <div class="post-items-header">Items in this outfit</div>
+              <div class="post-items-grid">
+                
+                <div class="post-item-card">
+                  <div class="post-item-thumb">
+                    <img src="Bilder/beigetrenchcoat.jpg" alt="Denim Jacket">
+                  </div>
+                  <div class="post-item-body">
+                    <div class="post-item-name">Denim Jacket</div>
+                    <div class="post-item-badges">
+                      <span class="badge">Outerwear</span>
+                      <span class="badge badge--muted">Blue</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="post-item-card">
+                  <div class="post-item-thumb">
+                    <img src="Bilder/weisstshirt.jpg" alt="White T-Shirt">
+                  </div>
+                  <div class="post-item-body">
+                    <div class="post-item-name">White T-Shirt</div>
+                    <div class="post-item-badges">
+                      <span class="badge">Tops</span>
+                      <span class="badge badge--muted">White</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="post-item-card">
+                  <div class="post-item-thumb">
+                    <img src="Bilder/dunkelblaujeans.jpg" alt="Black Jeans">
+                  </div>
+                  <div class="post-item-body">
+                    <div class="post-item-name">Black Jeans</div>
+                    <div class="post-item-badges">
+                      <span class="badge">Bottoms</span>
+                      <span class="badge badge--muted">Black</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="post-item-card">
+                  <div class="post-item-thumb">
+                    <img src="Bilder/braunlederschuhe.jpg" alt="Brown Boots">
+                  </div>
+                  <div class="post-item-body">
+                    <div class="post-item-name">Brown Boots</div>
+                    <div class="post-item-badges">
+                      <span class="badge">Shoes</span>
+                      <span class="badge badge--muted">Brown</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="post-item-card">
+                  <div class="post-item-thumb">
+                    <img src="Bilder/braunledertasche.jpg" alt="Leather Bag">
+                  </div>
+                  <div class="post-item-body">
+                    <div class="post-item-name">Leather Bag</div>
+                    <div class="post-item-badges">
+                      <span class="badge">Accessories</span>
+                      <span class="badge badge--muted">Brown</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Post description and interaction buttons -->
+          <div class="post-text">
+            <h4 class="post-title">Autumn Layers</h4>
+            <p class="post-desc">Perfect fall vibes! 🍂 Loving this cozy layered look for the cooler weather</p>
+
+            <hr class="post-sep" />
+
+            <!-- Like and Borrow action buttons -->
+            <div class="post-actions">
+                <!-- Like button: toggles liked state, synced via feed.js -->
+                <button class="action like" data-post-id="post1" aria-label="Like">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span class="count">24</span>
+                </button>
+
+                <!-- Borrow button: allows requesting selected items, synced via feed.js -->
+                <button class="action borrow" data-post-id="post1" aria-label="Borrow">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 2L3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6l-3-4H6z" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 6h18" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 10a4 4 0 0 1-8 0" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>Borrow</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 2: Sila's Casual Sunday outfit -->
+        <article class="post-card">
+          <header class="post-header">
+            <div class="post-author">
+              <div class="avatar" aria-hidden="true">
+                <img src="https://i.pravatar.cc/120?img=9" alt="Sila's profile avatar" />
+              </div>
+              <div class="author-meta">
+                <div class="author-name">Sila</div>
+                <div class="post-date">sila.s58_</div>
+              </div>
+            </div>
+            <button class="btn follow-btn" data-user-id="user2" data-user-name="Sila">Follow</button>
+          </header>
+
+          <div class="post-main">
+            <div class="post-thumb"><img src="Bilder/fit2.jpg" alt="main item"></div>
+
+            <div class="post-items-section">
+              <div class="post-items-header">Items in this outfit</div>
+              <div class="post-items-grid">
+                
+                <div class="post-item-card">
+                  <div class="post-item-thumb">
+                    <img src="Bilder/graupulli.jpg" alt="Striped Sweater">
+                  </div>
+                  <div class="post-item-body">
+                    <div class="post-item-name">Striped Sweater</div>
+                    <div class="post-item-badges">
+                      <span class="badge">Tops</span>
+                      <span class="badge badge--muted">Beige</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="post-item-card">
+                  <div class="post-item-thumb">
+                    <img src="Bilder/hellblaushorts.jpg" alt="High Waist Jeans">
+                  </div>
+                  <div class="post-item-body">
+                    <div class="post-item-name">High Waist Jeans</div>
+                    <div class="post-item-badges">
+                      <span class="badge">Bottoms</span>
+                      <span class="badge badge--muted">Blue</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="post-item-card">
+                  <div class="post-item-thumb">
+                    <img src="Bilder/beigesandalen.jpg" alt="White Sneakers">
+                  </div>
+                  <div class="post-item-body">
+                    <div class="post-item-name">White Sneakers</div>
+                    <div class="post-item-badges">
+                      <span class="badge">Shoes</span>
+                      <span class="badge badge--muted">White</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="post-text">
+            <h4 class="post-title">Casual Sunday</h4>
+            <p class="post-desc">Keeping it simple and comfy for a relaxed weekend look ☀️</p>
+
+            <hr class="post-sep" />
+
+            <div class="post-actions">
+                <button class="action like" data-post-id="post2" aria-label="Like">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span class="count">39</span>
+                </button>
+
+                <button class="action borrow" data-post-id="post2" aria-label="Borrow">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 2L3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6l-3-4H6z" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 6h18" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 10a4 4 0 0 1-8 0" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>Borrow</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 3: Emilia's Office Ready outfit -->
+        <article class="post-card">
+          <header class="post-header">
+            <div class="post-author">
+              <div class="avatar" aria-hidden="true">
+                <img src="https://i.pravatar.cc/120?img=47" alt="Emilia's profile avatar" />
+              </div>
+              <div class="author-meta">
+                <div class="author-name">Emilia</div>
+                <div class="post-date">emilia_kopp</div>
+              </div>
+            </div>
+            <button class="btn follow-btn" data-user-id="user3" data-user-name="Emilia">Follow</button>
+          </header>
+
+          <div class="post-main">
+            <div class="post-thumb"><img src="Bilder/fit3.jpg" alt="main item"></div>
+
+            <div class="post-items-section">
+              <div class="post-items-header">Items in this outfit</div>
+              <div class="post-items-grid">
+                
+                <div class="post-item-card">
+                  <div class="post-item-thumb">
+                    <img src="Bilder/schwarzlederjacke.jpg" alt="Blazer">
+                  </div>
+                  <div class="post-item-body">
+                    <div class="post-item-name">Blazer</div>
+                    <div class="post-item-badges">
+                      <span class="badge">Outerwear</span>
+                      <span class="badge badge--muted">Black</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="post-item-card">
+                  <div class="post-item-thumb">
+                    <img src="Bilder/weisserpulli.jpg" alt="Silk Blouse">
+                  </div>
+                  <div class="post-item-body">
+                    <div class="post-item-name">Silk Blouse</div>
+                    <div class="post-item-badges">
+                      <span class="badge">Tops</span>
+                      <span class="badge badge--muted">Cream</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="post-item-card">
+                  <div class="post-item-thumb">
+                    <img src="Bilder/schwarzrock.jpg" alt="Trousers">
+                  </div>
+                  <div class="post-item-body">
+                    <div class="post-item-name">Trousers</div>
+                    <div class="post-item-badges">
+                      <span class="badge">Bottoms</span>
+                      <span class="badge badge--muted">Black</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="post-item-card">
+                  <div class="post-item-thumb">
+                    <img src="Bilder/blauheels.jpg" alt="Heels">
+                  </div>
+                  <div class="post-item-body">
+                    <div class="post-item-name">Heels</div>
+                    <div class="post-item-badges">
+                      <span class="badge">Shoes</span>
+                      <span class="badge badge--muted">Nude</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="post-text">
+            <h4 class="post-title">Office Ready</h4>
+            <p class="post-desc">Professional but stylish - perfect for those important meetings 💼</p>
+
+            <hr class="post-sep" />
+
+            <div class="post-actions">
+                <button class="action like" data-post-id="post3" aria-label="Like">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span class="count">27</span>
+                </button>
+
+                <button class="action borrow" data-post-id="post3" aria-label="Borrow">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 2L3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6l-3-4H6z" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 6h18" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 10a4 4 0 0 1-8 0" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>Borrow</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Post 3: Emilia's Office Ready outfit -->
+        <article class="post-card">
+          <header class="post-header">
+            <div class="post-author">
+              <div class="avatar" aria-hidden="true">
+                <img src="https://i.pravatar.cc/120?img=47" alt="Emilia's profile avatar" />
+              </div>
+              <div class="author-meta">
+                <div class="author-name">Emilia</div>
+                <div class="post-date">emilia_kopp</div>
+              </div>
+            </div>
+            <button class="btn follow-btn" data-user-id="user3" data-user-name="Emilia">Follow</button>
+          </header>
+
+          <div class="post-main">
+            <div class="post-thumb"><img src="Bilder/fit4.jpg" alt="main item"></div>
+
+            <div class="post-items-section">
+              <div class="post-items-header">Items in this outfit</div>
+              <div class="post-items-grid">
+                
+                <div class="post-item-card">
+                  <div class="post-item-thumb">
+                    <img src="Bilder/beigeponcho.jpg" alt="Oversized Sweater">
+                  </div>
+                  <div class="post-item-body">
+                    <div class="post-item-name">Oversized Sweater</div>
+                    <div class="post-item-badges">
+                      <span class="badge">Tops</span>
+                      <span class="badge badge--muted">Beige</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="post-item-card">
+                  <div class="post-item-thumb">
+                    <img src="Bilder/braunsneaker.jpg" alt="Mom Jeans">
+                  </div>
+                  <div class="post-item-body">
+                    <div class="post-item-name">Mom Jeans</div>
+                    <div class="post-item-badges">
+                      <span class="badge">Bottoms</span>
+                      <span class="badge badge--muted">Light Blue</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="post-item-card">
+                  <div class="post-item-thumb">
+                    <img src="Bilder/goldsonnenbrille.jpg" alt="Gold Necklace">
+                  </div>
+                  <div class="post-item-body">
+                    <div class="post-item-name">Gold Necklace</div>
+                    <div class="post-item-badges">
+                      <span class="badge">Accessories</span>
+                      <span class="badge badge--muted">Gold</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="post-text">
+            <h4 class="post-title">Weekend Vibes</h4>
+            <p class="post-desc">Brunch ready! ☕ Love mixing casual pieces with statement accessories</p>
+
+            <hr class="post-sep" />
+
+            <div class="post-actions">
+                <button class="action like" data-post-id="post4" aria-label="Like">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span class="count">31</span>
+                </button>
+
+                <button class="action borrow" data-post-id="post4" aria-label="Borrow">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 2L3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6l-3-4H6z" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 6h18" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 10a4 4 0 0 1-8 0" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>Borrow</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </main>
+      
+      <!-- Modal: Create New Post -->
+      <!-- Allows users to create and share outfit posts -->
+      <div id="create-post-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="create-post-title">
+        <div class="modal-backdrop" data-close></div>
+        <div class="modal-sheet" role="document">
+          <header class="modal-header">
+            <h3 id="create-post-title">Create New Post</h3>
+            <button class="modal-close" aria-label="Close">✕</button>
+          </header>
+
+          <form id="create-post-form" class="modal-form">
+            <p class="modal-sub">Share your outfit with the community</p>
+
+            <div class="field">
+              <div class="field-label">Photo</div>
+              <div class="upload-row">
+                <input type="file" id="post-file-input" class="file-input" accept="image/*" />
+                <button type="button" class="btn file-btn" id="upload-post-btn">Choose Photo</button>
+              </div>
+              <div id="post-preview" class="post-image-preview" style="display:none;">
+                <img id="post-preview-img" alt="Post preview" />
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="field-label">Items in Outfit</div>
+              <button type="button" class="btn file-btn" id="choose-items-btn">Choose Items</button>
+              <div id="selected-items-preview" style="display:none;margin-top:12px;">
+                <div style="display:flex;gap:8px;flex-wrap:wrap;" id="selected-items-container"></div>
+              </div>
+            </div>
+
+            <label class="field">
+              <div class="field-label">Title</div>
+              <input name="title" placeholder="e.g., Autumn Layers" class="input" required />
+            </label>
+
+            <label class="field">
+              <div class="field-label">Description</div>
+              <textarea name="description" placeholder="Tell us about your outfit..." class="input textarea" rows="4"></textarea>
+            </label>
+
+            <div class="modal-actions">
+              <button type="button" class="btn cancel" data-close>Cancel</button>
+              <button type="submit" class="btn primary">Post</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Floating action button: navigates to create post page -->
+      <button class="floating-add-btn" onclick="window.location.href='create-post.html'" aria-label="Add new post" title="Add new post">+</button>
+      
+      <script>
+        // Inline JavaScript for feed page functionality
+        // Note: feed.js provides additional functionality (following, borrows, item selection)
+        document.addEventListener('DOMContentLoaded', function() {
+          // === LIKE FUNCTIONALITY (Local to this page) ===cal to this page) ===
+          var LIKES_KEY = 'closy-likes-v1';
+          
+          // Load liked posts from localStorage
+          function loadLikes() {
+            try {
+              var raw = localStorage.getItem(LIKES_KEY);
+              return raw ? JSON.parse(raw) : {};
+            } catch (e) {
+              return {};
+            }
+          }
+          
+          // Save liked posts to localStorage
+          function saveLikes(likes) {
+            try {
+              localStorage.setItem(LIKES_KEY, JSON.stringify(likes));
+            } catch (e) {}
+          }
+          
+          var likes = loadLikes();
+          
+          // Function to initialize like buttons (both static posts and user posts)
+          function initializeLikeButtons() {
+            var likeButtons = document.querySelectorAll('.action.like');
+            
+            likeButtons.forEach(function(btn) {
+              var postId = btn.getAttribute('data-post-id');
+              var countSpan = btn.querySelector('.count');
+              
+              if (!postId || !countSpan) return;
+              
+              // Get initial count from HTML
+              var baseCount = parseInt(countSpan.textContent) || 0;
+              
+              // Restore liked state from localStorage
+              if (likes[postId] && likes[postId].liked) {
+                btn.classList.add('liked');
+                countSpan.textContent = likes[postId].count;
+              } else {
+                btn.classList.remove('liked');
+                // If not liked, ensure we have the base count stored
+                if (!likes[postId]) {
+                  likes[postId] = { count: baseCount, liked: false };
+                  saveLikes(likes);
+                }
+                countSpan.textContent = likes[postId].count;
+              }
+            });
+          }
+          
+          // Add click handler with event delegation
+          document.addEventListener('click', function(e) {
+            var btn = e.target.closest('.action.like');
+            if (!btn) return;
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            var postId = btn.getAttribute('data-post-id');
+            var countSpan = btn.querySelector('.count');
+            
+            if (!postId || !countSpan) return;
+            
+            var isLiked = btn.classList.contains('liked');
+            var currentCount = parseInt(countSpan.textContent) || 0;
+            
+            // Toggle like state and update count
+            if (isLiked) {
+              // Unlike: decrement count
+              btn.classList.remove('liked');
+              var newCount = Math.max(0, currentCount - 1);
+              countSpan.textContent = newCount;
+              likes[postId] = { count: newCount, liked: false };
+            } else {
+              // Like: increment count
+              btn.classList.add('liked');
+              var newCount = currentCount + 1;
+              countSpan.textContent = newCount;
+              likes[postId] = { count: newCount, liked: true };
+            }
+            
+            // Save to localStorage
+            saveLikes(likes);
+          });
+          
+          // Initialize all like buttons on page load
+          initializeLikeButtons();
+          
+          // === FOLLOW BUTTON FUNCTIONALITY (Local to this page) ===
+          var FOLLOWING_KEY = 'closy-following-v1';
+          
+          // Load following data from localStorage
+          function loadFollowing() {
+            try {
+              var raw = localStorage.getItem(FOLLOWING_KEY);
+              if (!raw) return {};
+              
+              var data = JSON.parse(raw);
+              
+              // Migration: Convert old array format to new object format (backwards compatibility)
+              if (Array.isArray(data)) {
+                var obj = {};
+                data.forEach(function(userId) {
+                  obj[userId] = { name: 'User', followedAt: Date.now() };
+                });
+                saveFollowing(obj);
+                return obj;
+              }
+
+              return data;
+            } catch (e) {
+              return {};
+            }
+          }
+          
+          // Save following data to localStorage
+          function saveFollowing(following) {
+            try {
+              localStorage.setItem(FOLLOWING_KEY, JSON.stringify(following));
+            } catch (e) {}
+          }
+          
+          // Check if currently following a user
+          function isFollowing(userId) {
+            var following = loadFollowing();
+            return !!following[userId];
+          }
+          
+          // Toggle follow status for a user
+          function toggleFollow(userId, userName) {
+            var following = loadFollowing();
+
+            if (following[userId]) {
+              delete following[userId]; // Unfollow
+            } else {
+              following[userId] = { name: userName, followedAt: Date.now() }; // Follow
+            }
+
+            saveFollowing(following);
+            return !!following[userId];
+          }
+          
+          // Update follow button visual state
+          function updateFollowButton(btn, userId) {
+            var following = loadFollowing();
+
+            if (following[userId]) {
+              btn.textContent = 'Following';
+              btn.className = 'btn follow-btn following-btn'; // Gray style
+              btn.removeAttribute('style');
+            } else {
+              btn.textContent = 'Follow';
+              btn.className = 'btn follow-btn'; // Purple gradient style
+              btn.removeAttribute('style');
+            }
+          }
+          
+          // Initialize: Set up follow buttons with slight delay to ensure DOM is ready
+          setTimeout(function() {
+            var followButtons = document.querySelectorAll('.follow-btn');
+            
+            followButtons.forEach(function(btn) {
+              var userId = btn.getAttribute('data-user-id');
+              var userName = btn.getAttribute('data-user-name');
+              
+              if (userId) {
+                // Restore follow state on page load
+                updateFollowButton(btn, userId);
+                
+                // Event: Follow button click handler
+                btn.addEventListener('click', function(e) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  
+                  var following = loadFollowing();
+                  
+                  // Toggle follow state
+                  if (following[userId]) {
+                    delete following[userId]; // Unfollow
+                  } else {
+                    following[userId] = { name: userName, followedAt: Date.now() }; // Follow
+                  }
+                  
+                  saveFollowing(following);
+                  
+                  // Update button appearance
+                  updateFollowButton(btn, userId);
+                });
+              }
+            });
+          }, 100);
+        });
+        
+        // === USER-CREATED POSTS ===
+        // Load and display posts created by the user (stored in localStorage)
+        document.addEventListener('DOMContentLoaded', function() {
+          var userPostsContainer = document.getElementById('user-posts-container');
+          if (!userPostsContainer) return;
+          
+          try {
+            // Load user's posts from localStorage
+            var rawPosts = localStorage.getItem('closy-user-posts-v1');
+            var userPosts = rawPosts ? JSON.parse(rawPosts) : [];
+            
+            // Render each user post at the top of the feed
+            userPosts.forEach(function(post) {
+              var itemsHtml = '';
+              if (post.items && post.items.length > 0) {
+                post.items.forEach(function(item) {
+                  itemsHtml += 
+                    '<div class="post-item-card">' +
+                      '<div class="post-item-thumb"><img src="' + item.image + '" alt="' + item.name + '"></div>' +
+                      '<div class="post-item-body">' +
+                        '<div class="post-item-name">' + item.name + '</div>' +
+                        '<div class="post-item-badges">' +
+                          '<span class="badge">' + item.category + '</span>' +
+                          '<span class="badge badge--muted">' + item.color + '</span>' +
+                        '</div>' +
+                      '</div>' +
+                    '</div>';
+                });
+              }
+              
+              var postHtml = 
+                '<article class="post-card">' +
+                  '<header class="post-header">' +
+                    '<div class="post-author">' +
+                      '<div class="avatar">' +
+                        '<img src="' + post.avatar + '" alt="' + post.author + '\'s avatar">' +
+                      '</div>' +
+                      '<div class="author-meta">' +
+                        '<div class="author-name">' + post.author + '</div>' +
+                        '<div class="post-date">' + post.username + '</div>' +
+                      '</div>' +
+                    '</div>' +
+                  '</header>' +
+                  '<div class="post-main">' +
+                    '<div class="post-thumb"><img src="' + post.image + '" alt="outfit"></div>' +
+                    '<div class="post-items-section">' +
+                      '<div class="post-items-header">Items in this outfit</div>' +
+                      '<div class="post-items-grid">' + itemsHtml + '</div>' +
+                    '</div>' +
+                  '</div>' +
+                  '<div class="post-text">' +
+                    '<h4 class="post-title">' + post.title + '</h4>' +
+                    '<p class="post-desc">' + post.description + '</p>' +
+                    '<hr class="post-sep">' +
+                    '<div class="post-actions">' +
+                      '<button class="action like" data-post-id="' + post.id + '">' +
+                        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+                        '<span class="count">' + post.likes + '</span>' +
+                      '</button>' +
+                      '<button class="action delete-post" data-post-id="' + post.id + '" style="margin-left:auto;background:#f3f3f6;color:#333;padding:10px 25px;border-radius:10px;font-weight:500;cursor:pointer;border:none;">' +
+                        '<span>Delete</span>' +
+                      '</button>' +
+                    '</div>' +
+                  '</div>' +
+                '</article>';
+              
+              userPostsContainer.insertAdjacentHTML('beforeend', postHtml);
+            });
+            
+            // Re-initialize like buttons for newly added user posts
+            initializeLikeButtons();
+            
+            // Add delete button event listeners
+            var deleteModal = document.getElementById('delete-modal');
+            var confirmDeleteBtn = document.getElementById('confirm-delete');
+            var cancelDeleteBtn = document.getElementById('cancel-delete');
+            var currentPostId = null;
+            
+            document.querySelectorAll('.delete-post').forEach(function(btn) {
+              // Hover effect
+              btn.addEventListener('mouseenter', function() {
+                this.style.background = '#e9e9ee';
+              });
+              btn.addEventListener('mouseleave', function() {
+                this.style.background = '#f3f3f6';
+              });
+              
+              // Click handler - show modal
+              btn.addEventListener('click', function() {
+                currentPostId = this.getAttribute('data-post-id');
+                deleteModal.style.display = 'flex';
+              });
+            });
+            
+            // Cancel delete
+            cancelDeleteBtn.addEventListener('click', function() {
+              deleteModal.style.display = 'none';
+              currentPostId = null;
+            });
+            
+            // Confirm delete
+            // Event: Confirm delete button - removes post from localStorage
+            confirmDeleteBtn.addEventListener('click', function() {
+              if (currentPostId) {
+                try {
+                  var posts = JSON.parse(localStorage.getItem('closy-user-posts-v1') || '[]');
+                  posts = posts.filter(function(p) { return p.id !== currentPostId; });
+                  localStorage.setItem('closy-user-posts-v1', JSON.stringify(posts));
+                  location.reload(); // Refresh to update feed
+                } catch (e) {
+                  alert('Error deleting post. Please try again.');
+                }
+              }
+            });
+            
+            // Event: Close modal when clicking on overlay backdrop
+            deleteModal.addEventListener('click', function(e) {
+              if (e.target === deleteModal) {
+                deleteModal.style.display = 'none';
+                currentPostId = null;
+              }
+            });
+          } catch (e) {}
+        });
+      </script>
+
+    </div>
+    
+    <!-- Modal: Delete Post Confirmation -->
+    <!-- Appears when user clicks delete on their own posts -->
+    <div id="delete-modal" class="modal-overlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;padding:16px;">
+      <div class="modal-content" style="background:#fff;padding:32px;border-radius:16px;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+        <h3 style="margin:0 0 12px 0;font-size:20px;color:#111;">Delete Post?</h3>
+        <p style="margin:0 0 24px 0;color:#666;font-size:15px;">Are you sure you want to delete this post? This action cannot be undone.</p>
+        <div style="display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap;">
+          <button id="cancel-delete" class="btn" style="background:#f3f3f6;color:#333;padding:10px 20px;border-radius:10px;border:none;cursor:pointer;font-weight:500;">Cancel</button>
+          <button id="confirm-delete" class="btn" style="background:#ff4444;color:#fff;padding:10px 20px;border-radius:10px;border:none;cursor:pointer;font-weight:500;">Delete</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- External script: Advanced feed functionality (following, borrows, item selection, cross-tab sync) -->
+    <script src="feed.js"></script>
+  </body>
+</html>

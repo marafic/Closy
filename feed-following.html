@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Closy — Feed — Following</title>
+    <link rel="stylesheet" href="styles/styles.css?v=2" />
+  </head>
+  <body>
+    <div class="page">
+    <header class="top">
+      <div class="logo-wrap">
+      <div id="site-header"></div>
+      </div>
+
+        <nav class="tabs">
+          <a class="tab" href="overview.html">Overview</a>
+          <a class="tab" href="my-closet.html">My Closet</a>
+          <a class="tab" href="planner.html">Planner</a>
+          <a class="tab" href="outfits.html">Outfits</a>
+          <a class="tab" href="feed.html">Feed</a>
+        </nav>
+      </header>
+    <script src="header.js"></script>
+
+      <main class="container">
+        <div class="feed-tabs">
+          <a class="feed-tab" href="feed.html">All Posts</a>
+          <a class="feed-tab active" href="feed-following.html">Following</a>
+          <a class="feed-tab" href="feed-friends.html">Friends</a>
+          <a class="feed-tab" href="my-profile.html">My Profile</a>
+        </div>
+
+        <section class="empty-closet">
+          <p class="empty-text">No posts from people you follow yet.</p>
+          <p class="panel-sub">Follow friends to see their posts here.</p>
+        </section>
+
+      </main>
+      
+      <!-- Floating Add Button -->
+      <button class="floating-add-btn" onclick="window.location.href='create-post.html'" aria-label="Add new post" title="Add new post">+</button>
+      
+      <script src="header.js"></script>
+
+    </div>
+    <script src="feed.js"></script>
+  </body>
+</html>

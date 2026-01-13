@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Closy — Planner</title>
+    <link rel="stylesheet" href="styles/styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <!-- <span style='color:green'>Seiten-Container</span> -->
+    <header class="top">
+      <!-- <span style='color:green'>Header mit Logo und Navigation</span> -->
+      <div class="logo-wrap">
+      <div id="site-header"></div>
+      </div>
+
+        <nav class="tabs">
+          <!-- <span style='color:green'>Navigation Tabs</span> -->
+          <a class="tab" href="overview.html">Overview</a>
+          <a class="tab" href="my-closet.html">My Closet</a>
+          <a class="tab active" href="planner.html">Planner</a>
+          <a class="tab" href="outfits.html">Outfits</a>
+          <a class="tab" href="feed.html">Feed</a>
+        </nav>
+      </header>
+    <script src="header.js"></script>
+
+      <main class="container">
+        <!-- <span style='color:green'>Begrüßungspanel mit Schritten</span> -->
+        <section class="welcome-panel">
+          <h3>Welcome to Outfit Planner</h3>
+          <p class="lead">Start building amazing outfits by adding items to your closet first!</p>
+
+          <div class="steps-grid">
+            <div class="step-card">
+              <div class="step-emoji">👕</div>
+              <div class="step-title">Add Items</div>
+              <div class="step-sub">Go to "My Closet" and add your clothing items</div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-emoji">✨</div>
+              <div class="step-title">Mix &amp; Match</div>
+              <div class="step-sub">Create unique combinations from your wardrobe</div>
+            </div>
+
+            <div class="step-card">
+              <div class="step-emoji">💾</div>
+              <div class="step-title">Save Outfits</div>
+              <div class="step-sub">Keep your favorite looks for quick access</div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Current Outfit panel (empty state) from screenshot -->
+        <!-- <span style='color:green'>Aktuelles Outfit Panel</span> -->
+        <section class="outfits-hero current-outfit">
+          <h3>Current Outfit</h3>
+          <div class="current-outfit-inner" style="width:100%">
+            <div class="outfit-bar" aria-live="polite"></div>
+            <div class="current-empty">
+              <div class="empty-illustration">✨</div>
+              <p class="panel-msg">Click on items below to add them to your outfit</p>
+              <p class="panel-sub">Mix and match to create your perfect look!</p>
+            </div>
+            <div class="save-row">
+              <label for="outfit-name-input" class="save-label">Outfit Name</label>
+              <div class="save-controls">
+                <input id="outfit-name-input" class="input outfit-name" placeholder="e.g., Casual Friday" />
+                <button id="save-outfit-btn" class="btn primary" type="button">Save Outfit</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Planner items (rendered from saved closet items) -->
+        <!-- <span style='color:green'>Your Closet Bereich mit Filter und Items</span> -->
+        <section class="closet-card" aria-label="Planner items">
+          <div class="closet-meta" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+            <div>Your Closet — click to add to outfit</div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <div class="custom-dropdown filter-dropdown" data-name="filter-category">
+                <button type="button" class="custom-dropdown-toggle filter-select" id="filter-category" style="min-width:140px;" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="custom-dropdown-value">All</span>
+                  <svg class="custom-dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <div class="custom-dropdown-menu" role="listbox">
+                  <div class="custom-dropdown-option selected" data-value="All">All</div>
+                  <div class="custom-dropdown-option" data-value="Tops">Tops</div>
+                  <div class="custom-dropdown-option" data-value="Bottoms">Bottoms</div>
+                  <div class="custom-dropdown-option" data-value="Dresses">Dresses</div>
+                  <div class="custom-dropdown-option" data-value="Outerwear">Outerwear</div>
+                  <div class="custom-dropdown-option" data-value="Shoes">Shoes</div>
+                  <div class="custom-dropdown-option" data-value="Accessories">Accessories</div>
+                  <div class="custom-dropdown-option" data-value="Underwear">Underwear</div>
+                </div>
+              </div>
+              <div class="custom-dropdown filter-dropdown" data-name="filter-season">
+                <button type="button" class="custom-dropdown-toggle filter-select" id="filter-season" style="min-width:120px;" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="custom-dropdown-value">All</span>
+                  <svg class="custom-dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <div class="custom-dropdown-menu" role="listbox">
+                  <div class="custom-dropdown-option selected" data-value="All">All</div>
+                  <div class="custom-dropdown-option" data-value="Spring">Spring</div>
+                  <div class="custom-dropdown-option" data-value="Summer">Summer</div>
+                  <div class="custom-dropdown-option" data-value="Fall">Fall</div>
+                  <div class="custom-dropdown-option" data-value="Winter">Winter</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="planner-clothing" role="list"></div>
+        </section>
+      </main>
+    <!-- <span style='color:green'>Externe Skripte für Outfits und Planner</span> -->
+    <script src="outfit.js"></script>
+    <script src="planner.js"></script>
+    </div>
+  </body>
+</html>

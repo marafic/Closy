@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Closy — Outfits</title>
+    <link rel="stylesheet" href="styles/styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <!-- <span style='color:green'>Seiten-Container</span> -->
+    <header class="top">
+      <!-- <span style='color:green'>Header mit Logo und Navigation</span> -->
+      <div class="logo-wrap">
+      <div id="site-header"></div>
+      </div>
+
+        <nav class="tabs">
+          <!-- <span style='color:green'>Navigation Tabs</span> -->
+          <a class="tab" href="overview.html">Overview</a>
+          <a class="tab" href="my-closet.html">My Closet</a>
+          <a class="tab" href="planner.html">Planner</a>
+          <a class="tab active" href="outfits.html">Outfits</a>
+          <a class="tab" href="feed.html">Feed</a>
+        </nav>
+      </header>
+      <script src="header.js"></script>
+
+      <main class="container">
+        <!-- <span style='color:green'>Outfits-Hero: Übersicht und Mini-Karten</span> -->
+        <section class="outfits-hero">
+          <h3>Your Outfit Collection</h3>
+          <p class="lead">No saved outfits yet. Create your first combination in the Outfit Planner!</p>
+
+          <div class="outfits-cards">
+            <div class="mini-card">
+              <div class="mini-icon">🎨</div>
+              <div class="mini-title">Create Outfits</div>
+              <div class="mini-sub">Mix and match items from your closet to create unique looks</div>
+            </div>
+
+            <div class="mini-card">
+              <div class="mini-icon">📱</div>
+              <div class="mini-title">Share with Friends</div>
+              <div class="mini-sub">Post your favorite outfits to inspire others</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- <span style='color:green'>Bereich für gespeicherte Outfits</span> -->
+        <section id="saved-outfits-section">
+          <h3>Saved Outfits</h3>
+          <div id="saved-outfits-grid" class="saved-outfit-grid">
+            <!-- saved outfits will be rendered here -->
+          </div>
+        </section>
+
+        <!-- <span style='color:green'>Call-to-Action Banner</span> -->
+        <section class="cta-banner">
+          <p class="cta-text">Ready to create your first outfit?</p>
+          <p class="cta-sub">Head to the Outfit Planner tab to get started!</p>
+        </section>
+      </main>
+    </div>
+  </body>
+  <!-- <span style='color:green'>Externe Skripte für Outfits</span> -->
+  <script src="outfit.js"></script>
+  <script src="outfits.js"></script>
+</html>

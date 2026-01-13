@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <!-- HEAD: Meta tags, viewport configuration, and global stylesheet -->
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Closy — My Closet</title>
+    <link rel="stylesheet" href="styles/styles.css?v=3" />
+  </head>
+  <body>
+    <div class="page">
+    <!-- HEADER: Logo injected by header.js + navigation tabs -->
+    <!-- #site-header: Populated with Closy logo and brand by header.js -->
+    <!-- Navigation: My Closet tab marked as active -->
+    <header class="top">
+      <div id="site-header"></div>
+
+        <nav class="tabs">
+          <a class="tab" href="overview.html">Overview</a>
+          <a class="tab active" href="my-closet.html">My Closet</a>
+          <a class="tab" href="planner.html">Planner</a>
+          <a class="tab" href="outfits.html">Outfits</a>
+          <a class="tab" href="feed.html">Feed</a>
+        </nav>
+      </header>
+
+      <main class="container">
+        <!-- FILTER BAR: Controls for filtering and adding closet items -->
+        <!-- Left side: Search icon + category/season dropdowns for filtering items -->
+        <!-- Category dropdown: Filter by clothing type (All, Tops, Bottoms, Dresses, etc.) -->
+        <!-- Season dropdown: Filter by applicable season (All, Spring, Summer, Fall, Winter) -->
+        <!-- Right side: Add Item button opens modal via button.js click handler -->
+        <!-- Filters handled by clothing.js which listens for 'change' events on selects -->
+        <div class="filter-bar">
+          <div class="filter-left">
+            <span class="filter-icon">🔍</span>
+            <div class="custom-dropdown filter-dropdown" data-name="filter-category">
+              <button type="button" class="custom-dropdown-toggle filter-select" id="filter-category" aria-haspopup="listbox" aria-expanded="false">
+                <span class="custom-dropdown-value">All</span>
+                <svg class="custom-dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="custom-dropdown-menu" role="listbox">
+                <div class="custom-dropdown-option selected" data-value="All">All</div>
+                <div class="custom-dropdown-option" data-value="Tops">Tops</div>
+                <div class="custom-dropdown-option" data-value="Bottoms">Bottoms</div>
+                <div class="custom-dropdown-option" data-value="Dresses">Dresses</div>
+                <div class="custom-dropdown-option" data-value="Outerwear">Outerwear</div>
+                <div class="custom-dropdown-option" data-value="Shoes">Shoes</div>
+                <div class="custom-dropdown-option" data-value="Accessories">Accessories</div>
+                <div class="custom-dropdown-option" data-value="Underwear">Underwear</div>
+              </div>
+            </div>
+            <div class="custom-dropdown filter-dropdown" data-name="filter-season">
+              <button type="button" class="custom-dropdown-toggle filter-select" id="filter-season" aria-haspopup="listbox" aria-expanded="false">
+                <span class="custom-dropdown-value">All</span>
+                <svg class="custom-dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="custom-dropdown-menu" role="listbox">
+                <div class="custom-dropdown-option selected" data-value="All">All</div>
+                <div class="custom-dropdown-option" data-value="Spring">Spring</div>
+                <div class="custom-dropdown-option" data-value="Summer">Summer</div>
+                <div class="custom-dropdown-option" data-value="Fall">Fall</div>
+                <div class="custom-dropdown-option" data-value="Winter">Winter</div>
+              </div>
+            </div>
+          </div>
+          <div class="filter-right">
+              <button id="add-item-btn" class="btn add-btn" type="button">+ Add Item</button>
+            </div>
+        </div>
+
+          <!-- CLOSET AREA: Main content displaying filtered clothing items -->
+          <!-- #clothing: Grid container populated by clothing.js renderAll() function -->
+          <!-- aria-live="polite": Announces changes to screen readers when items added/removed -->
+          <!-- Empty state section: Shown when no items exist or all filtered out -->
+          <div class="closet-area">
+            <div id="clothing" class="closet-grid" aria-live="polite"></div>
+
+            <section class="empty-closet" id="empty-closet">
+              <p class="empty-text">No items in your closet yet.</p>
+              <p class="empty-text">Add your first item in the top right corner!</p>
+            </section>
+          </div>
+      </main>
+
+      <!-- ADD ITEM MODAL: Dialog for adding new clothing items to closet -->
+      <!-- Opened by #add-item-btn click via button.js -->
+      <!-- Modal managed by button.js (open/close, focus trap, backdrop click) -->
+      <!-- Form submission handled by button.js which calls clothing.js addItem() -->
+      <!-- Accessibility: aria-hidden, role="dialog", aria-labelledby for screen readers -->
+      <div id="add-item-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="add-item-title">
+        <div class="modal-backdrop" data-close></div>
+        <div class="modal-sheet" role="document">
+          <header class="modal-header">
+            <h3 id="add-item-title">Add Clothing Item</h3>
+            <button class="modal-close" aria-label="Close">✕</button>
+          </header>
+
+          <!-- FORM: Collects item details - name, category, color, image, seasons -->
+          <!-- Submit event handled by button.js which collects FormData and passes to clothing.js -->
+          <form id="add-item-form" class="modal-form">
+            <p class="modal-sub">Add a new item to your closet. Fill in the details below.</p>
+
+            <!-- Item Name: Text input for identifying the clothing item -->
+            <label class="field">
+              <div class="field-label">Item Name</div>
+              <input name="name" placeholder="e.g., Blue Denim Jacket" class="input" />
+            </label>
+
+            <!-- Category: Required dropdown for clothing type classification -->
+            <!-- Options match filter categories for consistent filtering -->
+            <label class="field">
+              <div class="field-label">Category</div>
+              <div class="custom-dropdown" data-name="category">
+                <button type="button" class="custom-dropdown-toggle input" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="custom-dropdown-value">Select category...</span>
+                  <svg class="custom-dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <div class="custom-dropdown-menu" role="listbox">
+                  <div class="custom-dropdown-option" data-value="Tops">Tops</div>
+                  <div class="custom-dropdown-option" data-value="Bottoms">Bottoms</div>
+                  <div class="custom-dropdown-option" data-value="Dresses">Dresses</div>
+                  <div class="custom-dropdown-option" data-value="Outerwear">Outerwear</div>
+                  <div class="custom-dropdown-option" data-value="Shoes">Shoes</div>
+                  <div class="custom-dropdown-option" data-value="Accessories">Accessories</div>
+                  <div class="custom-dropdown-option" data-value="Underwear">Underwear</div>
+                  <div class="custom-dropdown-option" data-value="Sleepwear">Sleepwear</div>
+                </div>
+                <input type="hidden" name="category" value="">
+              </div>
+            </label>
+
+            <!-- Color: Optional dropdown for item color selection -->
+            <!-- Used for visual organization and potential future filtering -->
+            <label class="field">
+              <div class="field-label">Color</div>
+              <div class="custom-dropdown" data-name="color">
+                <button type="button" class="custom-dropdown-toggle input" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="custom-dropdown-value">Select color...</span>
+                  <svg class="custom-dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <div class="custom-dropdown-menu" role="listbox">
+                  <div class="custom-dropdown-option" data-value="Black">Black</div>
+                  <div class="custom-dropdown-option" data-value="White">White</div>
+                  <div class="custom-dropdown-option" data-value="Gray">Gray</div>
+                  <div class="custom-dropdown-option" data-value="Brown">Brown</div>
+                  <div class="custom-dropdown-option" data-value="Beige">Beige</div>
+                  <div class="custom-dropdown-option" data-value="Red">Red</div>
+                  <div class="custom-dropdown-option" data-value="Pink">Pink</div>
+                  <div class="custom-dropdown-option" data-value="Orange">Orange</div>
+                  <div class="custom-dropdown-option" data-value="Yellow">Yellow</div>
+                  <div class="custom-dropdown-option" data-value="Green">Green</div>
+                  <div class="custom-dropdown-option" data-value="Blue">Blue</div>
+                  <div class="custom-dropdown-option" data-value="Navy">Navy</div>
+                  <div class="custom-dropdown-option" data-value="Purple">Purple</div>
+                  <div class="custom-dropdown-option" data-value="Gold">Gold</div>
+                  <div class="custom-dropdown-option" data-value="Silver">Silver</div>
+                  <div class="custom-dropdown-option" data-value="Multicolor">Multicolor</div>
+                </div>
+                <input type="hidden" name="color" value="">
+              </div>
+            </label>
+
+            <!-- Image: File upload for item photo -->
+            <!-- File input hidden, triggered by "Upload from Device" button via button.js -->
+            <!-- Preview shown in #image-preview after selection -->
+            <!-- Image converted to base64 by button.js FileReader for localStorage storage -->
+            <div class="field">
+              <div class="field-label">Image</div>
+              <div class="upload-row">
+                <input type="file" id="file-input" class="file-input" accept="image/*" />
+                <button type="button" class="btn file-btn">Upload from Device</button>
+                <div id="image-preview"></div>
+              </div>
+            </div>
+
+            <!-- Seasons: Optional checkboxes for seasonal applicability -->
+            <!-- If no seasons checked, item is considered suitable for all seasons -->
+            <!-- Used by filter dropdown to show items for specific season -->
+            <div class="field seasons">
+              <div class="field-label">Seasons</div>
+              <label><input type="checkbox" name="spring" /> Spring</label>
+              <label><input type="checkbox" name="summer" /> Summer</label>
+              <label><input type="checkbox" name="fall" /> Fall</label>
+              <label><input type="checkbox" name="winter" /> Winter</label>
+            </div>
+
+            <!-- Modal Actions: Cancel closes modal, Add Item submits form -->
+            <!-- Submit handled by button.js which collects FormData and calls clothing.js addItem() -->
+            <div class="modal-actions">
+              <button type="button" class="btn cancel" data-close>Cancel</button>
+              <button type="submit" class="btn primary">Add Item</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- EXTERNAL SCRIPTS -->
+    <!-- clothing.js: Manages closet items (load, render, filter, add, remove) -->
+    <!-- button.js: Modal management, focus trap, file upload, form submission -->
+    <!-- header.js: Injects logo and brand into #site-header -->
+    <script src="clothing.js"></script>
+    <script src="button.js"></script>
+    <script src="header.js"></script>
+  </body>
+</html>

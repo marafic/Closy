@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Closy — Feed — Friends</title>
+    <link rel="stylesheet" href="styles/styles.css" />
+  </head>
+  <body>
+    <div class="page">
+    <header class="top">
+      <div class="logo-wrap">
+      <div id="site-header"></div>
+      </div>
+
+        <nav class="tabs">
+          <a class="tab" href="overview.html">Overview</a>
+          <a class="tab" href="my-closet.html">My Closet</a>
+          <a class="tab" href="planner.html">Planner</a>
+          <a class="tab" href="outfits.html">Outfits</a>
+          <a class="tab" href="feed.html">Feed</a>
+        </nav>
+      </header>
+    <script src="header.js"></script>
+
+      <main class="container">
+        <div class="feed-tabs">
+          <a class="feed-tab" href="feed.html">All Posts</a>
+          <a class="feed-tab" href="feed-following.html">Following</a>
+          <a class="feed-tab active" href="feed-friends.html">Friends</a>
+          <a class="feed-tab" href="my-profile.html">My Profile</a>
+        </div>
+
+        <div id="friends-list" class="friends-list">
+          <!-- Friends will be loaded here -->
+        </div>
+
+        <section class="empty-closet" id="empty-friends" style="display:none;">
+          <p class="empty-text">You're not following anyone yet.</p>
+          <p class="panel-sub">Follow people to see them here.</p>
+        </section>
+
+      </main>
+
+      <!-- Floating Add Button -->
+      <button class="floating-add-btn" onclick="window.location.href='create-post.html'" aria-label="Add new post" title="Add new post">+</button>
+
+      <script>
+        // Friends page functionality
+        document.addEventListener('DOMContentLoaded', function() {
+          console.log('Friends page loaded');
+          var FOLLOWING_KEY = 'closy-following-v1';
+          
+          function loadFollowing() {
+            try {
+              var raw = localStorage.getItem(FOLLOWING_KEY);
+              return raw ? JSON.parse(raw) : {};
+            } catch (e) {
+              console.error('loadFollowing error', e);
+              return {};
+            }
+          }
+          
+          function saveFollowing(following) {
+            try {
+              localStorage.setItem(FOLLOWING_KEY, JSON.stringify(following));
+            } catch (e) {
+              console.error('saveFollowing error', e);
+            }
+          }
+          
+          function toggleFollow(userId, userName) {
+            var following = loadFollowing();
+            
+            if (following[userId]) {
+              delete following[userId];
+            } else {
+              following[userId] = { name: userName, followedAt: Date.now() };
+            }
+            
+            saveFollowing(following);
+            renderFriends();
+          }
+          
+          function renderFriends() {
+            var following = loadFollowing();
+            var friendsList = document.getElementById('friends-list');
+            var emptyState = document.getElementById('empty-friends');
+            
+            var userIds = Object.keys(following);
+            
+            if (userIds.length === 0) {
+              friendsList.innerHTML = '';
+              emptyState.style.display = '';
+              return;
+            }
+            
+            emptyState.style.display = 'none';
+            friendsList.innerHTML = '';
+            
+            userIds.forEach(function(userId) {
+              var friend = following[userId];
+              var friendCard = document.createElement('div');
+              friendCard.className = 'friend-card';
+              
+              // Map user IDs to consistent avatar images
+              var avatarMap = {
+                'user1': 'https://i.pravatar.cc/120?img=5',
+                'user2': 'https://i.pravatar.cc/120?img=9',
+                'user3': 'https://i.pravatar.cc/120?img=47'
+              };
+              var avatarUrl = avatarMap[userId] || 'https://i.pravatar.cc/120?img=10';
+              
+              friendCard.innerHTML = 
+                '<div class="friend-info">' +
+                  '<div class="avatar">' +
+                    '<img src="' + avatarUrl + '" alt="' + friend.name + '">' +
+                  '</div>' +
+                  '<div class="friend-name">' + friend.name + '</div>' +
+                '</div>' +
+                '<button class="btn follow-btn following-btn" data-user-id="' + userId + '" data-user-name="' + friend.name + '">' +
+                  'Following' +
+                '</button>';
+              
+              friendsList.appendChild(friendCard);
+            });
+            
+            // Add click handlers to follow buttons
+            var followBtns = friendsList.querySelectorAll('.follow-btn');
+            followBtns.forEach(function(btn) {
+              btn.addEventListener('click', function() {
+                var userId = btn.getAttribute('data-user-id');
+                var userName = btn.getAttribute('data-user-name');
+                toggleFollow(userId, userName);
+              });
+            });
+          }
+          
+          renderFriends();
+        });
+      </script>
+
+    </div>
+    <script src="feed.js"></script>
+  </body>
+</html>
