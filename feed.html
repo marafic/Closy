@@ -486,8 +486,12 @@
       <script>
         // Inline JavaScript for feed page functionality
         // Note: feed.js provides additional functionality (following, borrows, item selection)
+        
+        // Global function to initialize like buttons (used by both script blocks)
+        var initializeLikeButtons;
+        
         document.addEventListener('DOMContentLoaded', function() {
-          // === LIKE FUNCTIONALITY (Local to this page) ===cal to this page) ===
+          // === LIKE FUNCTIONALITY (Local to this page) ===
           var LIKES_KEY = 'closy-likes-v1';
           
           // Load liked posts from localStorage
@@ -510,7 +514,7 @@
           var likes = loadLikes();
           
           // Function to initialize like buttons (both static posts and user posts)
-          function initializeLikeButtons() {
+          initializeLikeButtons = function() {
             var likeButtons = document.querySelectorAll('.action.like');
             
             likeButtons.forEach(function(btn) {
@@ -536,7 +540,7 @@
                 countSpan.textContent = likes[postId].count;
               }
             });
-          }
+          }; // End of initializeLikeButtons
           
           // Add click handler with event delegation
           document.addEventListener('click', function(e) {
@@ -753,14 +757,16 @@
             // Re-initialize like buttons for newly added user posts
             initializeLikeButtons();
             
-            // Add delete button event listeners
+            // === DELETE FUNCTIONALITY ===
+            // Set up modal and event listeners for delete buttons
             var deleteModal = document.getElementById('delete-modal');
             var confirmDeleteBtn = document.getElementById('confirm-delete');
             var cancelDeleteBtn = document.getElementById('cancel-delete');
-            var currentPostId = null;
+            var currentPostId = null; // Track which post to delete
             
+            // Attach listeners to all delete buttons
             document.querySelectorAll('.delete-post').forEach(function(btn) {
-              // Hover effect
+              // Hover effect for delete button
               btn.addEventListener('mouseenter', function() {
                 this.style.background = '#e9e9ee';
               });
@@ -768,42 +774,46 @@
                 this.style.background = '#f3f3f6';
               });
               
-              // Click handler - show modal
+              // Click handler - show confirmation modal
               btn.addEventListener('click', function() {
                 currentPostId = this.getAttribute('data-post-id');
                 deleteModal.style.display = 'flex';
               });
             });
             
-            // Cancel delete
+            // Cancel delete - close modal without deleting
             cancelDeleteBtn.addEventListener('click', function() {
               deleteModal.style.display = 'none';
               currentPostId = null;
             });
             
-            // Confirm delete
-            // Event: Confirm delete button - removes post from localStorage
+            // Confirm delete - remove post from localStorage and reload
             confirmDeleteBtn.addEventListener('click', function() {
               if (currentPostId) {
                 try {
+                  // Load posts, filter out the deleted one, save back
                   var posts = JSON.parse(localStorage.getItem('closy-user-posts-v1') || '[]');
                   posts = posts.filter(function(p) { return p.id !== currentPostId; });
                   localStorage.setItem('closy-user-posts-v1', JSON.stringify(posts));
-                  location.reload(); // Refresh to update feed
+                  // Reload page to reflect changes
+                  location.reload();
                 } catch (e) {
+                  console.error('Error deleting post:', e);
                   alert('Error deleting post. Please try again.');
                 }
               }
             });
             
-            // Event: Close modal when clicking on overlay backdrop
+            // Close modal when clicking outside (on overlay)
             deleteModal.addEventListener('click', function(e) {
               if (e.target === deleteModal) {
                 deleteModal.style.display = 'none';
                 currentPostId = null;
               }
             });
-          } catch (e) {}
+          } catch (e) {
+            console.error('Error loading user posts:', e);
+          }
         });
       </script>
 

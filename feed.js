@@ -251,6 +251,9 @@
       btn.innerHTML = `${SVG_BAG}<span>Borrow</span>`; // Bag icon
     }
   }
+  
+  // Export for external use (e.g., feed-following.html)
+  window.updateBorrowButton = updateBorrowButton;
 
   // Updates visual state of item cards to show which items are borrowed (grayed out)
   function updatePostItemCards(postCard, postId){
@@ -277,6 +280,9 @@
       }
     });
   }
+  
+  // Export for external use (e.g., feed-following.html)
+  window.updatePostItemCards = updatePostItemCards;
 
   // ========== FEED RENDERING ==========
   

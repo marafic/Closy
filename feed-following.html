@@ -49,6 +49,20 @@
       document.addEventListener('DOMContentLoaded', function(){
         if(typeof window.renderFollowingFeed === 'function'){
           window.renderFollowingFeed();
+          
+          // Re-initialize borrow buttons after posts are rendered
+          setTimeout(function() {
+            document.querySelectorAll('.action.borrow').forEach(function(btn) {
+              var postId = btn.getAttribute('data-post-id');
+              if(postId && typeof window.updateBorrowButton === 'function'){
+                window.updateBorrowButton(btn, postId);
+                var postCard = btn.closest('.post-card');
+                if(postCard && typeof window.updatePostItemCards === 'function') {
+                  window.updatePostItemCards(postCard, postId);
+                }
+              }
+            });
+          }, 100);
         }
       });
     </script>
