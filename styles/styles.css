@@ -20,9 +20,9 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvet
 .brand-tag{color:var(--muted);font-size:13px}
 
 /* Navigation tabs */
-.tabs{display:flex;flex-wrap:nowrap;justify-content:center;margin-top:22px;background:rgba(255,255,255,0.95);border-radius:999px;padding:clamp(4px,1vw,6px);box-shadow:0 10px 20px rgba(0,0,0,0.06);max-width:100%;gap:4px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none}
+.tabs{display:flex;flex-wrap:nowrap;justify-content:center;margin-top:22px;background:rgba(255,255,255,0.95);border-radius:999px;padding:clamp(3px,1vw,6px);box-shadow:0 10px 20px rgba(0,0,0,0.06);max-width:100%;gap:3px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none}
 .tabs::-webkit-scrollbar{display:none}
-.tab{border:0;background:transparent;padding:clamp(8px,1.5vw,10px) clamp(12px,2.5vw,18px);border-radius:999px;font-weight:600;color:#333;cursor:pointer;text-decoration:none;font-size:clamp(13px,2vw,14px);white-space:nowrap;flex-shrink:0}
+.tab{border:0;background:transparent;padding:clamp(6px,1.5vw,10px) clamp(8px,2.5vw,18px);border-radius:999px;font-weight:600;color:#333;cursor:pointer;text-decoration:none;font-size:clamp(11px,2vw,14px);white-space:nowrap;flex-shrink:0}
 .tab.active{background:#fff;box-shadow:0 8px 18px rgba(0,0,0,0.06)}
 
 /* Main container */
