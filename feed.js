@@ -531,14 +531,9 @@
       }
     });
 
-    // Auto-render: If on following feed page, render posts from followed users
-    const isFollowingPage = window.location.pathname.includes('feed-following.html') || 
-                           window.location.href.includes('feed-following.html');
+    // Initialize: If on following feed page, following posts will be rendered by inline script in feed-following.html
+    // (Prevents duplicate rendering when both feed.js and feed-following.html try to render)
     
-    if(isFollowingPage){
-      window.renderFollowingFeed();
-    }
-
     // Initialize: Update follow buttons to reflect current follow state on page load
     document.querySelectorAll('.follow-btn').forEach(btn => {
       const userId = btn.getAttribute('data-user-id');
@@ -572,6 +567,9 @@
 
     // Cross-tab sync: Listen for localStorage changes from other browser tabs
     // Updates UI in real-time when following/likes/borrows change in another tab
+    const isFollowingPage = window.location.pathname.includes('feed-following.html') || 
+                           window.location.href.includes('feed-following.html');
+    
     window.addEventListener('storage', (e)=>{
       if(e.key === FOLLOWING_KEY && isFollowingPage){
         // Following changed: clear and re-render following feed
