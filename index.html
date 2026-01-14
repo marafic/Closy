@@ -3,27 +3,106 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Closy - Overview</title>
+    <title>Closy - Login</title>
     <link rel="stylesheet" href="styles/styles.css" />
   </head>
   <body>
     <div class="page">
-      <!-- <span style='color:green'>Seiten-Container</span> -->
-    <header class="top">
-      <!-- <span style='color:green'>Header mit Logo und Navigation</span> -->
-      <div id="site-header"></div>
+      <header class="top">
+        <div id="site-header"></div>
+      </header>
 
-        <nav class="tabs">
-          <!-- <span style='color:green'>Navigation Tabs</span> -->
-          <a class="tab active" href="index.html">Overview</a>
-          <a class="tab" href="my-closet.html">My Closet</a>
-          <a class="tab" href="planner.html">Planner</a>
-          <a class="tab" href="outfits.html">Outfits</a>
-          <a class="tab" href="feed.html">Feed</a>
-        </nav>
-    </header>
+      <main class="container">
+        <div style="max-width:500px;margin:60px auto;">
+          <!-- Login Card -->
+          <article class="post-card">
+            <div style="padding:20px;text-align:center;margin-bottom:20px;">
+              <h2 style="margin:0 0 8px;font-size:28px;font-weight:700;color:#8b4cff;">Welcome to Closy</h2>
+              <p style="margin:0;color:#7b7b95;font-size:14px;">Mix, Match & Share</p>
+            </div>
 
-    <main class="container">
+            <form id="login-form" style="padding:0 20px;">
+              <!-- Username Field -->
+              <div class="field" style="margin-bottom:16px;">
+                <label class="field-label">Username</label>
+                <input 
+                  type="text" 
+                  id="username-input" 
+                  placeholder="Enter your username" 
+                  class="input" 
+                  style="width:100%;" 
+                  required
+                />
+              </div>
+
+              <!-- Password Field -->
+              <div class="field" style="margin-bottom:24px;">
+                <label class="field-label">Password</label>
+                <input 
+                  type="password" 
+                  id="password-input" 
+                  placeholder="Enter your password" 
+                  class="input" 
+                  style="width:100%;" 
+                  required
+                />
+              </div>
+
+              <!-- Login Button -->
+              <button 
+                type="submit" 
+                class="btn primary" 
+                style="width:100%;padding:12px;margin-bottom:16px;font-size:16px;"
+              >
+                Login
+              </button>
+            </form>
+
+            <!-- Info Message -->
+            <div style="padding:0 20px 20px;text-align:center;">
+              <p style="margin:0;color:#9aa0b5;font-size:13px;">
+                Demo: Use any username and password to login
+              </p>
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+
+    <script src="header.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('login-form');
+        var usernameInput = document.getElementById('username-input');
+        var passwordInput = document.getElementById('password-input');
+
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          var username = usernameInput.value.trim();
+          var password = passwordInput.value;
+
+          // Validate inputs
+          if (!username || !password) {
+            alert('Please enter both username and password');
+            return;
+          }
+
+          // Simple validation: any non-empty username and password accepted
+          // Store username in localStorage for potential future use
+          try {
+            localStorage.setItem('closy-current-user', username);
+          } catch (e) {
+            console.error('Error saving user', e);
+          }
+
+          // Redirect to overview
+          window.location.href = 'overview.html';
+        });
+      });
+    </script>
+  </body>
+</html>
       <!-- <span style='color:green'>Karten-Übersicht: Total Items, Saved Outfits, Posts Shared, Following</span> -->
       <section class="cards">
         <article class="card card--lavender">
@@ -79,183 +158,38 @@
         </section>
       </main>
     </div>
-        <script>
-          // <span style='color:green'>JS: Dynamische Updates für alle Karten und Panels</span>
-          // Update the Total Items card from localStorage
-          document.addEventListener('DOMContentLoaded', function () {
-            try {
-              var raw = localStorage.getItem('closy-items-v1');
-              var count = 0;
-              if (raw) {
-                var parsed = JSON.parse(raw);
-                if (Array.isArray(parsed)) count = parsed.length;
-              }
-              var el = document.querySelector('.card--lavender .card-value');
-              if (el) el.textContent = String(count);
-            } catch (err) {}
 
-            // Update the Saved Outfits card from localStorage
-            try {
-              var rawOutfits = localStorage.getItem('closy-saved-outfits-v1');
-              var outfitCount = 0;
-              if (rawOutfits) {
-                var parsedOutfits = JSON.parse(rawOutfits);
-                if (Array.isArray(parsedOutfits)) outfitCount = parsedOutfits.length;
-              }
-              var outfitEl = document.querySelector('.card--pink .card-value');
-              if (outfitEl) outfitEl.textContent = String(outfitCount);
-            } catch (err) {}
-
-            // Update the Following card from localStorage
-            try {
-              var rawFollowing = localStorage.getItem('closy-following-v1');
-              var followingCount = 0;
-              if (rawFollowing) {
-                var parsedFollowing = JSON.parse(rawFollowing);
-                // Following is stored as an object with userId keys
-                if (typeof parsedFollowing === 'object' && parsedFollowing !== null) {
-                  followingCount = Object.keys(parsedFollowing).length;
-                }
-              }
-              var followingEl = document.querySelector('.card--mint .card-value');
-              if (followingEl) followingEl.textContent = String(followingCount);
-            } catch (err) {}
-
-            // Update the Posts Shared card from localStorage
-            try {
-              var rawPosts = localStorage.getItem('closy-user-posts-v1');
-              var postsCount = 0;
-              if (rawPosts) {
-                var parsedPosts = JSON.parse(rawPosts);
-                if (Array.isArray(parsedPosts)) postsCount = parsedPosts.length;
-              }
-              var postsEl = document.querySelector('.card--blue .card-value');
-              if (postsEl) postsEl.textContent = String(postsCount);
-            } catch (err) {}
-
-            // Update Category Breakdown panel
-            try {
-              var items = [];
-              var rawItems = localStorage.getItem('closy-items-v1');
-              if (rawItems) {
-                var parsedItems = JSON.parse(rawItems);
-                if (Array.isArray(parsedItems)) items = parsedItems;
-              }
-              
-              if (items.length === 0) {
-                document.getElementById('category-empty').style.display = 'block';
-                document.getElementById('category-empty-msg').style.display = 'block';
-                document.getElementById('category-empty-sub').style.display = 'block';
-                document.getElementById('category-breakdown').style.display = 'none';
-              } else {
-                document.getElementById('category-empty').style.display = 'none';
-                document.getElementById('category-empty-msg').style.display = 'none';
-                document.getElementById('category-empty-sub').style.display = 'none';
-                document.getElementById('category-breakdown').style.display = 'block';
-                
-                // Count categories
-                var catCounts = {};
-                items.forEach(function(item) {
-                  var cat = item.category ? String(item.category).trim() : 'Other';
-                  catCounts[cat] = (catCounts[cat] || 0) + 1;
-                });
-                
-                // Sort by count descending
-                var sorted = Object.keys(catCounts).map(function(k){ return {name:k, count:catCounts[k]}; });
-                sorted.sort(function(a,b){ return b.count - a.count; });
-                
-                var maxCount = sorted[0] ? sorted[0].count : 1;
-                var html = '';
-                sorted.forEach(function(cat) {
-                  var percent = Math.round((cat.count / maxCount) * 100);
-                  html += '<div class="cat-row"><div class="cat-label">' + cat.name + '</div>';
-                  html += '<div class="cat-bar"><div class="cat-fill" style="width:' + percent + '%"></div></div>';
-                  html += '<div class="cat-count">' + cat.count + '</div></div>';
-                });
-                document.getElementById('category-breakdown').innerHTML = html;
-              }
-            } catch (err) {}
-
-            // Update Top Colors panel
-            try {
-              var items = [];
-              var rawItems = localStorage.getItem('closy-items-v1');
-              if (rawItems) {
-                var parsedItems = JSON.parse(rawItems);
-                if (Array.isArray(parsedItems)) items = parsedItems;
-              }
-              
-              if (items.length === 0) {
-                document.getElementById('colors-empty').style.display = 'block';
-                document.getElementById('colors-empty-msg').style.display = 'block';
-                document.getElementById('colors-empty-sub').style.display = 'block';
-                document.getElementById('colors-breakdown').style.display = 'none';
-              } else {
-                document.getElementById('colors-empty').style.display = 'none';
-                document.getElementById('colors-empty-msg').style.display = 'none';
-                document.getElementById('colors-empty-sub').style.display = 'none';
-                document.getElementById('colors-breakdown').style.display = 'block';
-                
-                // Count colors
-                var colorCounts = {};
-                items.forEach(function(item) {
-                  var color = item.color ? String(item.color).trim() : 'Unknown';
-                  if (color) colorCounts[color] = (colorCounts[color] || 0) + 1;
-                });
-                
-                // Sort by count descending
-                var sorted = Object.keys(colorCounts).map(function(k){ return {name:k, count:colorCounts[k]}; });
-                sorted.sort(function(a,b){ return b.count - a.count; });
-                
-                var maxCount = sorted[0] ? sorted[0].count : 1;
-                var html = '';
-                sorted.forEach(function(color) {
-                  var percent = Math.round((color.count / maxCount) * 100);
-                  html += '<div class="cat-row"><div class="cat-label">' + color.name + '</div>';
-                  html += '<div class="cat-bar"><div class="cat-fill" style="width:' + percent + '%"></div></div>';
-                  html += '<div class="cat-count">' + color.count + '</div></div>';
-                });
-                document.getElementById('colors-breakdown').innerHTML = html;
-              }
-            } catch (err) { console.error('colors breakdown error', err); }
-
-            // Update Style Insights
-            try {
-              var items = [];
-              var rawItems = localStorage.getItem('closy-items-v1');
-              if (rawItems) {
-                var parsedItems = JSON.parse(rawItems);
-                if (Array.isArray(parsedItems)) items = parsedItems;
-              }
-              
-              if (items.length === 0) {
-                document.getElementById('style-insights').style.display = 'none';
-              } else {
-                document.getElementById('style-insights').style.display = 'block';
-                
-                // Find most common category
-                var catCounts = {};
-                items.forEach(function(item) {
-                  var cat = item.category ? String(item.category).trim() : 'items';
-                  catCounts[cat] = (catCounts[cat] || 0) + 1;
-                });
-                var topCat = Object.keys(catCounts).reduce(function(a, b) { return catCounts[a] > catCounts[b] ? a : b; }, 'items');
-                var topCatCount = catCounts[topCat] || 0;
-                
-                // Find most common color
-                var colorCounts = {};
-                items.forEach(function(item) {
-                  var color = item.color ? String(item.color).trim().toLowerCase() : '';
-                  if (color) colorCounts[color] = (colorCounts[color] || 0) + 1;
-                });
-                var topColor = Object.keys(colorCounts).length > 0 ? Object.keys(colorCounts).reduce(function(a, b) { return colorCounts[a] > colorCounts[b] ? a : b; }) : 'various colors';
-                
-                var text = 'Your closet has the most ' + topCat + ' (' + topCatCount + ' items). Your favorite color is ' + topColor + '.';
-                document.getElementById('insights-text').textContent = text;
-              }
-            } catch (err) { console.error('style insights error', err); }
-          });
-        </script>
     <script src="header.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var form = document.getElementById('login-form');
+        var usernameInput = document.getElementById('username-input');
+        var passwordInput = document.getElementById('password-input');
+
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          var username = usernameInput.value.trim();
+          var password = passwordInput.value;
+
+          // Validate inputs
+          if (!username || !password) {
+            alert('Please enter both username and password');
+            return;
+          }
+
+          // Simple validation: any non-empty username and password accepted
+          // Store username in localStorage for potential future use
+          try {
+            localStorage.setItem('closy-current-user', username);
+          } catch (e) {
+            console.error('Error saving user', e);
+          }
+
+          // Redirect to overview
+          window.location.href = 'overview.html';
+        });
+      });
+    </script>
   </body>
 </html>
