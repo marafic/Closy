@@ -394,6 +394,12 @@ select.input[size]{padding:8px;height:auto}
   .post-main{gap:clamp(12px,2.5vw,18px)}
 }
 
+/* Create post form: Stack on narrow screens */
+@media (max-width:600px){
+  .post-main{flex-direction:column}
+  .post-items-section{max-width:100%}
+}
+
 /* Individual post item cards */
 .post-item-card{background:#f9f9fb;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 4px 12px rgba(16,24,40,0.04);transition:transform 0.2s ease,box-shadow 0.2s ease;height:100%}
 .post-item-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(16,24,40,0.08)}

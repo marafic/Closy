@@ -54,10 +54,10 @@
                 <!-- ITEM SELECTION: Choose up to 6 items from closet to include in post -->
                 <!-- Choose Items button: Opens modal with closet items (handled by inline JavaScript) -->
                 <!-- #selected-items-grid: 3x2 grid showing selected items or placeholder slots -->
-                <div class="post-items-section" style="display:flex;flex-direction:column;height:400px;gap:0;">
+                <div class="post-items-section" style="display:flex;flex-direction:column;gap:0;width:100%;">
                   <div class="post-items-header" style="margin-bottom:8px;height:20px;flex-shrink:0;">Items in this outfit</div>
                   <button type="button" class="btn file-btn" id="choose-items-btn" style="margin-bottom:12px;height:36px;flex-shrink:0;">Choose Items (max 6)</button>
-                  <div class="post-items-grid" id="selected-items-grid" style="grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);height:360px;">
+                  <div class="post-items-grid" id="selected-items-grid" style="grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);min-height:280px;width:100%;">
                     <div style="background:#f9f9fb;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#7b7b95;font-size:14px;border:2px dashed #ddd;">
                       No items selected
                     </div>
