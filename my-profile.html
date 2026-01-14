@@ -102,6 +102,15 @@
       <!-- Handles: loading following count, rendering user posts, delete functionality -->
       <!-- Uses localStorage: 'closy-following-v1', 'closy-user-posts-v1' -->
       <script>
+        // Global delete modal function (called directly from button onclick)
+        window.showDeleteModal = function(postId) {
+          window.currentPostId = postId;
+          var deleteModal = document.getElementById('delete-modal');
+          if (deleteModal) {
+            deleteModal.style.display = 'flex';
+          }
+        };
+        
         // Wait for DOM to load before accessing elements
         document.addEventListener('DOMContentLoaded', function() {
           // === LOAD FOLLOWING COUNT ===
@@ -185,7 +194,7 @@
                           '<span class="count">' + post.likes + '</span>' +
                         '</button>' +
                         // Delete button: Only shown on user's own posts (profile page)
-                        '<button class="action delete-post" data-post-id="' + post.id + '" style="margin-left:auto;background:#f3f3f6;color:#333;padding:10px 16px;border-radius:10px;font-weight:500;cursor:pointer;border:none;">' +
+                        '<button class="action delete-post" data-post-id="' + post.id + '" onclick="window.showDeleteModal(\'' + post.id + '\')" style="margin-left:auto;background:#f3f3f6;color:#333;padding:10px 16px;border-radius:10px;font-weight:500;cursor:pointer;border:none;">' +
                           '<span>Delete</span>' +
                         '</button>' +
                       '</div>' +
@@ -197,39 +206,7 @@
               });
               
               // === DELETE FUNCTIONALITY ===
-              // Function to attach delete button listeners (must be defined before use)
-              function attachDeleteListeners() {
-                var deleteModal = document.getElementById('delete-modal');
-                var deleteButtons = document.querySelectorAll('.delete-post');
-                console.log('Attaching listeners to', deleteButtons.length, 'delete buttons');
-                
-                deleteButtons.forEach(function(btn) {
-                  // Clone button to remove old listeners
-                  var newBtn = btn.cloneNode(true);
-                  btn.parentNode.replaceChild(newBtn, btn);
-                  
-                  // Add fresh listeners to new button
-                  newBtn.addEventListener('mouseenter', function() {
-                    this.style.background = '#e9e9ee';
-                  });
-                  newBtn.addEventListener('mouseleave', function() {
-                    this.style.background = '#f3f3f6';
-                  });
-                  newBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    window.currentPostId = this.getAttribute('data-post-id');
-                    console.log('Delete clicked for post:', window.currentPostId);
-                    deleteModal.style.display = 'flex';
-                  });
-                });
-              }
-              
-              // Attach listeners after all posts are rendered
-              attachDeleteListeners();
-              
-              // Set up modal and event listeners for delete buttons
-              var deleteModal = document.getElementById('delete-modal');
+              // Set up modal buttons (delete button onclick is set directly in HTML via window.showDeleteModal)
               var confirmDeleteBtn = document.getElementById('confirm-delete');
               var cancelDeleteBtn = document.getElementById('cancel-delete');
               window.currentPostId = null; // Track which post to delete (global so accessible in attachDeleteListeners)
