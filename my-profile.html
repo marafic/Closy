@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-  <!-- HEAD: Meta tags, viewport configuration, and global stylesheet -->
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,14 +8,10 @@
   </head>
   <body>
     <div class="page">
-    <!-- HEADER: Logo injected by header.js + navigation tabs -->
-    <!-- #site-header: Populated with Closy logo and brand by header.js -->
-    <!-- Navigation: Feed tab marked as active (profile is part of feed section) -->
     <header class="top">
       <div class="logo-wrap">
       <div id="site-header"></div>
       </div>
-
         <nav class="tabs">
           <a class="tab" href="overview.html">Overview</a>
           <a class="tab" href="my-closet.html">My Closet</a>
@@ -25,12 +20,9 @@
           <a class="tab active" href="feed.html">Feed</a>
         </nav>
       </header>
-    <!-- Header script: Injects logo and brand into #site-header -->
     <script src="header.js"></script>
 
       <main class="container">
-        <!-- FEED TABS: Sub-navigation for feed views -->
-        <!-- My Profile tab marked as active -->
         <div class="feed-tabs">
           <a class="feed-tab" href="feed.html">All Posts</a>
           <a class="feed-tab" href="feed-following.html">Following</a>
@@ -38,11 +30,6 @@
           <a class="feed-tab active" href="my-profile.html">My Profile</a>
         </div>
 
-        <!-- PROFILE CARD: User avatar, name, username, and stats -->
-        <!-- Stats dynamically updated by inline JavaScript -->
-        <!-- #posts-count: User's post count from 'closy-user-posts-v1' -->
-        <!-- #followers-count: Hardcoded to 3 (no follower tracking implemented) -->
-        <!-- #following-count: Count from 'closy-following-v1' localStorage -->
         <div class="panel" style="margin-bottom:24px;padding:32px;display:flex;flex-direction:column;align-items:center;">
           <div class="avatar" style="width:120px;height:120px;margin-bottom:20px;">
             <img src="https://i.pravatar.cc/120?img=20" alt="My profile avatar" />
@@ -67,26 +54,17 @@
           </div>
         </div>
 
-        <!-- POSTS SECTION: Display user's created posts -->
         <h3 style="margin-bottom:16px;">My Posts</h3>
-        <!-- Empty state: Shown when no posts exist -->
         <section class="empty-closet" id="empty-posts" style="display:none;">
           <p class="empty-text">You haven't created any posts yet.</p>
           <p class="panel-sub">Share your outfits with the community!</p>
         </section>
         
-        <!-- Posts container: Populated by inline JavaScript from 'closy-user-posts-v1' -->
         <div id="my-posts-container"></div>
-
       </main>
 
-      <!-- FLOATING ADD BUTTON: Quick access to create new post -->
-      <!-- Redirects to create-post.html -->
       <button class="floating-add-btn" onclick="window.location.href='create-post.html'" aria-label="Add new post" title="Add new post">+</button>
 
-      <!-- DELETE POST MODAL: Confirmation dialog before deleting a post -->
-      <!-- #cancel-delete: Closes modal without deleting -->
-      <!-- #confirm-delete: Removes post from localStorage and reloads page -->
       <div id="delete-modal" class="modal-overlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;padding:16px;">
         <div class="modal-content" style="background:#fff;padding:32px;border-radius:16px;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
           <h3 style="margin:0 0 12px 0;font-size:20px;color:#111;">Delete Post?</h3>
@@ -98,26 +76,21 @@
         </div>
       </div>
 
-      <!-- INLINE JAVASCRIPT: Profile and posts functionality -->
-      <!-- Handles: loading following count, rendering user posts, delete functionality -->
-      <!-- Uses localStorage: 'closy-following-v1', 'closy-user-posts-v1' -->
       <script>
-        // Global delete modal functions (called directly from button onclick)
+        // Global delete functions
+        window.currentPostId = null;
+        
         window.showDeleteModal = function(postId) {
-          console.log('showDeleteModal called with postId:', postId);
+          console.log('showDeleteModal called with:', postId);
           window.currentPostId = postId;
-          var deleteModal = document.getElementById('delete-modal');
-          if (deleteModal) {
-            deleteModal.style.display = 'flex';
-          }
+          var modal = document.getElementById('delete-modal');
+          if (modal) modal.style.display = 'flex';
         };
         
         window.hideDeleteModal = function() {
           console.log('hideDeleteModal called');
-          var deleteModal = document.getElementById('delete-modal');
-          if (deleteModal) {
-            deleteModal.style.display = 'none';
-          }
+          var modal = document.getElementById('delete-modal');
+          if (modal) modal.style.display = 'none';
           window.currentPostId = null;
         };
         
@@ -129,146 +102,78 @@
           }
           
           try {
-            // Load posts, filter out the deleted one, save back
             var posts = JSON.parse(localStorage.getItem('closy-user-posts-v1') || '[]');
-            console.log('Posts before delete:', posts.length);
-            for (var i = 0; i < posts.length; i++) {
-              console.log('  Post', i, ':', posts[i].id);
-            }
+            console.log('Posts before:', posts.length);
+            var newPosts = posts.filter(function(p) { 
+              return p.id !== window.currentPostId; 
+            });
+            console.log('Posts after:', newPosts.length);
             
-            var newPosts = [];
-            var found = false;
-            for (var i = 0; i < posts.length; i++) {
-              if (posts[i].id === window.currentPostId) {
-                console.log('FOUND POST TO DELETE:', posts[i].id);
-                found = true;
-              } else {
-                newPosts.push(posts[i]);
-              }
-            }
-            
-            console.log('Posts after filter:', newPosts.length);
-            
-            if (!found) {
-              console.warn('No post was deleted - ID not found!');
+            if (newPosts.length === posts.length) {
               alert('Post not found');
               return;
             }
             
             localStorage.setItem('closy-user-posts-v1', JSON.stringify(newPosts));
-            console.log('Post deleted successfully, reloading...');
-            
-            // Close modal and reload page
+            console.log('Post deleted, reloading...');
             window.hideDeleteModal();
-            setTimeout(function() {
-              location.reload();
-            }, 100);
+            location.reload();
           } catch (e) {
-            console.error('Error deleting post:', e);
-            alert('Error deleting post: ' + e.message);
+            console.error('Delete error:', e);
+            alert('Error: ' + e.message);
           }
         };
         
-        // Wait for DOM to load before accessing elements
         document.addEventListener('DOMContentLoaded', function() {
-          // === LOAD FOLLOWING COUNT ===
-          // Read 'closy-following-v1' object and count keys
+          console.log('Page loaded');
+          
           try {
             var following = localStorage.getItem('closy-following-v1');
-            var followingData = following ? JSON.parse(following) : {};
-            var followingCount = Object.keys(followingData).length;
-            document.getElementById('following-count').textContent = followingCount;
+            var count = following ? Object.keys(JSON.parse(following)).length : 0;
+            document.getElementById('following-count').textContent = count;
           } catch (e) {
-            console.error('Error loading following', e);
+            console.error('Following error:', e);
           }
 
-          // === LOAD USER POSTS ===
-          // Read posts from 'closy-user-posts-v1' and render post cards
           try {
             var rawPosts = localStorage.getItem('closy-user-posts-v1');
-            var userPosts = rawPosts ? JSON.parse(rawPosts) : [];
-            console.log('Loaded posts:', userPosts);
-            console.log('Number of posts:', userPosts.length);
-            var postsContainer = document.getElementById('my-posts-container');
-            var emptySection = document.getElementById('empty-posts');
-            var postsCountEl = document.getElementById('posts-count');
+            var posts = rawPosts ? JSON.parse(rawPosts) : [];
+            console.log('Loaded', posts.length, 'posts');
             
-            // Update posts count in profile stats
-            if (postsCountEl) postsCountEl.textContent = userPosts.length;
+            var container = document.getElementById('my-posts-container');
+            var empty = document.getElementById('empty-posts');
+            var countEl = document.getElementById('posts-count');
             
-            // Show empty state if no posts
-            if (userPosts.length === 0) {
-              emptySection.style.display = '';
-            } else {
-              emptySection.style.display = 'none';
-              
-              // Render each post as post-card
-              userPosts.forEach(function(post) {
-                // Build items HTML for post-items-grid
-                var itemsHtml = '';
-                if (post.items && post.items.length > 0) {
-                  post.items.forEach(function(item) {
-                    itemsHtml += 
-                      '<div class="post-item-card">' +
-                        '<div class="post-item-thumb"><img src="' + item.image + '" alt="' + item.name + '"></div>' +
-                        '<div class="post-item-body">' +
-                          '<div class="post-item-name">' + item.name + '</div>' +
-                          '<div class="post-item-badges">' +
-                            '<span class="badge">' + item.category + '</span>' +
-                            '<span class="badge badge--muted">' + item.color + '</span>' +
-                          '</div>' +
-                        '</div>' +
-                      '</div>';
-                  });
-                }
-                
-                // Build complete post card HTML with author, image, items, and actions
-                // Includes like button and delete button (only on profile page)
-                var postHtml = 
-                  '<article class="post-card">' +
-                    '<header class="post-header">' +
-                      '<div class="post-author">' +
-                        '<div class="avatar">' +
-                          '<img src="' + post.avatar + '" alt="' + post.author + 's avatar">' +
-                        '</div>' +
-                        '<div class="author-meta">' +
-                          '<div class="author-name">' + post.author + '</div>' +
-                          '<div class="post-date">' + post.username + '</div>' +
-                        '</div>' +
-                      '</div>' +
-                    '</header>' +
-                    '<div class="post-main">' +
-                      '<div class="post-thumb"><img src="' + post.image + '" alt="outfit"></div>' +
-                      '<div class="post-items-section">' +
-                        '<div class="post-items-header">Items in this outfit</div>' +
-                        '<div class="post-items-grid">' + itemsHtml + '</div>' +
-                      '</div>' +
-                    '</div>' +
-                    '<div class="post-text">' +
-                      '<h4 class="post-title">' + post.title + '</h4>' +
-                      '<p class="post-desc">' + post.description + '</p>' +
-                      '<hr class="post-sep">' +
-                      '<div class="post-actions">' +
-                        '<button class="action like" data-post-id="' + post.id + '">' +
-                          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-                          '<span class="count">' + post.likes + '</span>' +
-                        '</button>' +
-                        // Delete button: Only shown on user's own posts (profile page)
-                        '<button class="action delete-post" data-post-id="' + post.id + '" onclick="window.showDeleteModal(\'' + post.id + '\')" style="margin-left:auto;background:#f3f3f6;color:#333;padding:10px 16px;border-radius:10px;font-weight:500;cursor:pointer;border:none;">' +
-                          '<span>Delete</span>' +
-                        '</button>' +
-                      '</div>' +
-                    '</div>' +
-                  '</article>';
-                
-                // Insert post card into container
-                console.log('Inserting post:', post.id, postHtml.substring(0, 100));
-                postsContainer.insertAdjacentHTML('beforeend', postHtml);
-              });
-              
-            } catch (e) {
-              console.error('Error loading posts', e);
+            if (countEl) countEl.textContent = posts.length;
+            
+            if (posts.length === 0) {
+              empty.style.display = '';
+              return;
             }
+            
+            empty.style.display = 'none';
+            
+            posts.forEach(function(post) {
+              var itemsHtml = '';
+              if (post.items && post.items.length > 0) {
+                itemsHtml = post.items.map(function(item) {
+                  return '<div class="post-item"><img src="' + item.image + '" alt="' + item.name + '"><div class="post-item-label">' + item.name + '</div></div>';
+                }).join('');
+              }
+              
+              var html = '<article class="post-card">' +
+                '<header class="post-header"><div class="post-author"><div class="avatar"><img src="' + post.avatar + '" alt="' + post.author + '"></div><div class="author-meta"><div class="author-name">' + post.author + '</div><div class="post-date">' + post.username + '</div></div></div></header>' +
+                '<div class="post-main"><div class="post-thumb"><img src="' + post.image + '" alt="outfit"></div><div class="post-items-section"><div class="post-items-header">Items in this outfit</div><div class="post-items-grid">' + itemsHtml + '</div></div></div>' +
+                '<div class="post-text"><h4 class="post-title">' + post.title + '</h4><p class="post-desc">' + post.description + '</p><hr class="post-sep"><div class="post-actions">' +
+                '<button class="action like" data-post-id="' + post.id + '"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" stroke="#111" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="count">' + post.likes + '</span></button>' +
+                '<button class="action delete-post" onclick="window.showDeleteModal(\'' + post.id + '\')" style="margin-left:auto;background:#f3f3f6;color:#333;padding:10px 16px;border-radius:10px;font-weight:500;cursor:pointer;border:none;"><span>Delete</span></button>' +
+                '</div></div></article>';
+              
+              container.insertAdjacentHTML('beforeend', html);
+            });
+          } catch (e) {
+            console.error('Posts error:', e);
+          }
         });
       </script>
 
