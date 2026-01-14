@@ -217,30 +217,41 @@
               // Set up modal buttons (delete button onclick is set directly in HTML via window.showDeleteModal)
               var confirmDeleteBtn = document.getElementById('confirm-delete');
               var cancelDeleteBtn = document.getElementById('cancel-delete');
+              var deleteModal = document.getElementById('delete-modal');
               window.currentPostId = null; // Track which post to delete (global so accessible in attachDeleteListeners)
               
+              console.log('Delete setup - confirmDeleteBtn:', confirmDeleteBtn, 'cancelDeleteBtn:', cancelDeleteBtn, 'deleteModal:', deleteModal);
+              
               // Cancel delete - close modal without deleting
-              cancelDeleteBtn.addEventListener('click', function() {
-                deleteModal.style.display = 'none';
-                window.currentPostId = null;
-              });
+              if (cancelDeleteBtn) {
+                cancelDeleteBtn.addEventListener('click', function() {
+                  console.log('Cancel clicked');
+                  deleteModal.style.display = 'none';
+                  window.currentPostId = null;
+                });
+              }
               
               // Confirm delete - remove post from localStorage and reload
-              confirmDeleteBtn.addEventListener('click', function() {
-                if (window.currentPostId) {
-                  try {
-                    // Load posts, filter out the deleted one, save back
-                    var posts = JSON.parse(localStorage.getItem('closy-user-posts-v1') || '[]');
-                    posts = posts.filter(function(p) { return p.id !== window.currentPostId; });
-                    localStorage.setItem('closy-user-posts-v1', JSON.stringify(posts));
-                    // Reload page to reflect changes
-                    location.reload();
-                  } catch (e) {
-                    console.error('Error deleting post:', e);
-                    alert('Error deleting post. Please try again.');
+              if (confirmDeleteBtn) {
+                confirmDeleteBtn.addEventListener('click', function() {
+                  console.log('Confirm delete clicked for post:', window.currentPostId);
+                  if (window.currentPostId) {
+                    try {
+                      // Load posts, filter out the deleted one, save back
+                      var posts = JSON.parse(localStorage.getItem('closy-user-posts-v1') || '[]');
+                      console.log('Posts before delete:', posts);
+                      posts = posts.filter(function(p) { return p.id !== window.currentPostId; });
+                      console.log('Posts after delete:', posts);
+                      localStorage.setItem('closy-user-posts-v1', JSON.stringify(posts));
+                      // Reload page to reflect changes
+                      location.reload();
+                    } catch (e) {
+                      console.error('Error deleting post:', e);
+                      alert('Error deleting post. Please try again.');
+                    }
                   }
-                }
-              });
+                });
+              }
               
               // Close modal when clicking outside (on overlay)
               deleteModal.addEventListener('click', function(e) {
