@@ -104,10 +104,15 @@
       <script>
         // Global delete modal function (called directly from button onclick)
         window.showDeleteModal = function(postId) {
+          console.log('showDeleteModal called with postId:', postId);
           window.currentPostId = postId;
           var deleteModal = document.getElementById('delete-modal');
+          console.log('deleteModal element:', deleteModal);
           if (deleteModal) {
+            console.log('Setting display to flex');
             deleteModal.style.display = 'flex';
+          } else {
+            console.error('delete-modal element not found!');
           }
         };
         
