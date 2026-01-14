@@ -16,4 +16,45 @@ document.addEventListener('DOMContentLoaded', function () {
     + '<div class="brand-tag">Mix, Match &amp; Share</div>' // Brand tagline
     + '</div>'
     + '</div>';
+
+  try {
+    // Ensure basic PWA/meta tags exist in <head>
+    var head = document.head;
+    if (head) {
+      // theme-color
+      if (!head.querySelector('meta[name="theme-color"]')) {
+        var theme = document.createElement('meta');
+        theme.setAttribute('name', 'theme-color');
+        theme.setAttribute('content', '#ffffff');
+        head.appendChild(theme);
+      }
+
+      // app icons
+      if (!head.querySelector('link[rel="icon"]')) {
+        var icon = document.createElement('link');
+        icon.setAttribute('rel', 'icon');
+        icon.setAttribute('href', 'Bilder/ClosyLogo.png');
+        head.appendChild(icon);
+      }
+      if (!head.querySelector('link[rel="apple-touch-icon"]')) {
+        var apple = document.createElement('link');
+        apple.setAttribute('rel', 'apple-touch-icon');
+        apple.setAttribute('href', 'Bilder/ClosyLogo.png');
+        head.appendChild(apple);
+      }
+
+      // manifest
+      if (!head.querySelector('link[rel="manifest"]')) {
+        var manifest = document.createElement('link');
+        manifest.setAttribute('rel', 'manifest');
+        manifest.setAttribute('href', 'manifest.webmanifest');
+        head.appendChild(manifest);
+      }
+    }
+
+    // Register service worker (if supported)
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js').catch(function(){});
+    }
+  } catch (e) {}
 });
