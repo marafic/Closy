@@ -92,8 +92,8 @@
           <h3 style="margin:0 0 12px 0;font-size:20px;color:#111;">Delete Post?</h3>
           <p style="margin:0 0 24px 0;color:#666;font-size:15px;">Are you sure you want to delete this post? This action cannot be undone.</p>
           <div style="display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap;">
-            <button id="cancel-delete" class="btn" style="background:#f3f3f6;color:#333;padding:10px 20px;border-radius:10px;border:none;cursor:pointer;font-weight:500;">Cancel</button>
-            <button id="confirm-delete" class="btn" style="background:#ff4444;color:#fff;padding:10px 20px;border-radius:10px;border:none;cursor:pointer;font-weight:500;">Delete</button>
+            <button id="cancel-delete" class="btn" onclick="window.hideDeleteModal()" style="background:#f3f3f6;color:#333;padding:10px 20px;border-radius:10px;border:none;cursor:pointer;font-weight:500;">Cancel</button>
+            <button id="confirm-delete" class="btn" onclick="window.confirmDelete()" style="background:#ff4444;color:#fff;padding:10px 20px;border-radius:10px;border:none;cursor:pointer;font-weight:500;">Delete</button>
           </div>
         </div>
       </div>
@@ -102,17 +102,59 @@
       <!-- Handles: loading following count, rendering user posts, delete functionality -->
       <!-- Uses localStorage: 'closy-following-v1', 'closy-user-posts-v1' -->
       <script>
-        // Global delete modal function (called directly from button onclick)
+        // Global delete modal functions (called directly from button onclick)
         window.showDeleteModal = function(postId) {
           console.log('showDeleteModal called with postId:', postId);
           window.currentPostId = postId;
           var deleteModal = document.getElementById('delete-modal');
-          console.log('deleteModal element:', deleteModal);
           if (deleteModal) {
-            console.log('Setting display to flex');
             deleteModal.style.display = 'flex';
-          } else {
-            console.error('delete-modal element not found!');
+          }
+        };
+        
+        window.hideDeleteModal = function() {
+          console.log('hideDeleteModal called');
+          var deleteModal = document.getElementById('delete-modal');
+          if (deleteModal) {
+            deleteModal.style.display = 'none';
+          }
+          window.currentPostId = null;
+        };
+        
+        window.confirmDelete = function() {
+          console.log('confirmDelete called for post:', window.currentPostId);
+          if (!window.currentPostId) {
+            alert('No post selected');
+            return;
+          }
+          
+          try {
+            // Load posts, filter out the deleted one, save back
+            var posts = JSON.parse(localStorage.getItem('closy-user-posts-v1') || '[]');
+            console.log('Posts before delete:', posts.length, posts);
+            
+            var originalLength = posts.length;
+            posts = posts.filter(function(p) {
+              console.log('Comparing', p.id, 'with', window.currentPostId, ':', p.id === window.currentPostId);
+              return p.id !== window.currentPostId;
+            });
+            console.log('Posts after filter:', posts.length, posts);
+            
+            if (posts.length === originalLength) {
+              console.warn('No post was deleted - ID not found!');
+              alert('Post not found');
+              return;
+            }
+            
+            localStorage.setItem('closy-user-posts-v1', JSON.stringify(posts));
+            console.log('Post deleted successfully');
+            
+            // Close modal and reload page
+            window.hideDeleteModal();
+            location.reload();
+          } catch (e) {
+            console.error('Error deleting post:', e);
+            alert('Error deleting post: ' + e.message);
           }
         };
         
@@ -213,57 +255,9 @@
                 postsContainer.insertAdjacentHTML('beforeend', postHtml);
               });
               
-              // === DELETE FUNCTIONALITY ===
-              // Set up modal buttons (delete button onclick is set directly in HTML via window.showDeleteModal)
-              var confirmDeleteBtn = document.getElementById('confirm-delete');
-              var cancelDeleteBtn = document.getElementById('cancel-delete');
-              var deleteModal = document.getElementById('delete-modal');
-              window.currentPostId = null; // Track which post to delete (global so accessible in attachDeleteListeners)
-              
-              console.log('Delete setup - confirmDeleteBtn:', confirmDeleteBtn, 'cancelDeleteBtn:', cancelDeleteBtn, 'deleteModal:', deleteModal);
-              
-              // Cancel delete - close modal without deleting
-              if (cancelDeleteBtn) {
-                cancelDeleteBtn.addEventListener('click', function() {
-                  console.log('Cancel clicked');
-                  deleteModal.style.display = 'none';
-                  window.currentPostId = null;
-                });
-              }
-              
-              // Confirm delete - remove post from localStorage and reload
-              if (confirmDeleteBtn) {
-                confirmDeleteBtn.addEventListener('click', function() {
-                  console.log('Confirm delete clicked for post:', window.currentPostId);
-                  if (window.currentPostId) {
-                    try {
-                      // Load posts, filter out the deleted one, save back
-                      var posts = JSON.parse(localStorage.getItem('closy-user-posts-v1') || '[]');
-                      console.log('Posts before delete:', posts);
-                      posts = posts.filter(function(p) { return p.id !== window.currentPostId; });
-                      console.log('Posts after delete:', posts);
-                      localStorage.setItem('closy-user-posts-v1', JSON.stringify(posts));
-                      // Reload page to reflect changes
-                      location.reload();
-                    } catch (e) {
-                      console.error('Error deleting post:', e);
-                      alert('Error deleting post. Please try again.');
-                    }
-                  }
-                });
-              }
-              
-              // Close modal when clicking outside (on overlay)
-              deleteModal.addEventListener('click', function(e) {
-                if (e.target === deleteModal) {
-                  deleteModal.style.display = 'none';
-                  window.currentPostId = null;
-                }
-              });
+            } catch (e) {
+              console.error('Error loading posts', e);
             }
-          } catch (e) {
-            console.error('Error loading posts', e);
-          }
         });
       </script>
 
