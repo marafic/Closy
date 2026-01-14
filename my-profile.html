@@ -134,6 +134,8 @@
           try {
             var rawPosts = localStorage.getItem('closy-user-posts-v1');
             var userPosts = rawPosts ? JSON.parse(rawPosts) : [];
+            console.log('Loaded posts:', userPosts);
+            console.log('Number of posts:', userPosts.length);
             var postsContainer = document.getElementById('my-posts-container');
             var emptySection = document.getElementById('empty-posts');
             var postsCountEl = document.getElementById('posts-count');
@@ -199,7 +201,7 @@
                           '<span class="count">' + post.likes + '</span>' +
                         '</button>' +
                         // Delete button: Only shown on user's own posts (profile page)
-                        '<button class="action delete-post" data-post-id="' + post.id + '" onclick="window.showDeleteModal(&quot;' + post.id + '&quot;)" style="margin-left:auto;background:#f3f3f6;color:#333;padding:10px 16px;border-radius:10px;font-weight:500;cursor:pointer;border:none;">' +
+                        '<button class="action delete-post" data-post-id="' + post.id + '" onclick="window.showDeleteModal(\'' + post.id + '\')" style="margin-left:auto;background:#f3f3f6;color:#333;padding:10px 16px;border-radius:10px;font-weight:500;cursor:pointer;border:none;">' +
                           '<span>Delete</span>' +
                         '</button>' +
                       '</div>' +
@@ -207,6 +209,7 @@
                   '</article>';
                 
                 // Insert post card into container
+                console.log('Inserting post:', post.id, postHtml.substring(0, 100));
                 postsContainer.insertAdjacentHTML('beforeend', postHtml);
               });
               
