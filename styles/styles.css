@@ -60,6 +60,13 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvet
   .panels{grid-template-columns:1fr}
 }
 
+/* Keep top navigation tabs on a single line on small screens */
+@media (max-width:700px){
+  .tabs{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;padding:8px 12px;font-size:13px}
+}
+
 /* Filter bar and empty closet styles */
 .filter-bar{background:#fff;border-radius:12px;padding:10px 14px;display:flex;align-items:center;box-shadow:var(--card-shadow);margin-bottom:26px;gap:12px;flex-wrap:nowrap}
 .filter-left{display:flex;align-items:center;gap:8px;flex-shrink:1;min-width:0;overflow:hidden}
