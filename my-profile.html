@@ -197,14 +197,9 @@
               });
               
               // === DELETE FUNCTIONALITY ===
-              // Set up modal and event listeners for delete buttons
-              var deleteModal = document.getElementById('delete-modal');
-              var confirmDeleteBtn = document.getElementById('confirm-delete');
-              var cancelDeleteBtn = document.getElementById('cancel-delete');
-              var currentPostId = null; // Track which post to delete
-              
-              // Function to attach delete button listeners (called on page load and after render)
+              // Function to attach delete button listeners (must be defined before use)
               function attachDeleteListeners() {
+                var deleteModal = document.getElementById('delete-modal');
                 document.querySelectorAll('.delete-post').forEach(function(btn) {
                   // Hover effect for delete button
                   btn.addEventListener('mouseenter', function() {
@@ -216,28 +211,34 @@
                   
                   // Click handler - show confirmation modal
                   btn.addEventListener('click', function() {
-                    currentPostId = this.getAttribute('data-post-id');
+                    window.currentPostId = this.getAttribute('data-post-id');
                     deleteModal.style.display = 'flex';
                   });
                 });
               }
               
-              // Attach listeners on initial load
+              // Attach listeners after all posts are rendered
               attachDeleteListeners();
+              
+              // Set up modal and event listeners for delete buttons
+              var deleteModal = document.getElementById('delete-modal');
+              var confirmDeleteBtn = document.getElementById('confirm-delete');
+              var cancelDeleteBtn = document.getElementById('cancel-delete');
+              window.currentPostId = null; // Track which post to delete (global so accessible in attachDeleteListeners)
               
               // Cancel delete - close modal without deleting
               cancelDeleteBtn.addEventListener('click', function() {
                 deleteModal.style.display = 'none';
-                currentPostId = null;
+                window.currentPostId = null;
               });
               
               // Confirm delete - remove post from localStorage and reload
               confirmDeleteBtn.addEventListener('click', function() {
-                if (currentPostId) {
+                if (window.currentPostId) {
                   try {
                     // Load posts, filter out the deleted one, save back
                     var posts = JSON.parse(localStorage.getItem('closy-user-posts-v1') || '[]');
-                    posts = posts.filter(function(p) { return p.id !== currentPostId; });
+                    posts = posts.filter(function(p) { return p.id !== window.currentPostId; });
                     localStorage.setItem('closy-user-posts-v1', JSON.stringify(posts));
                     // Reload page to reflect changes
                     location.reload();
@@ -252,7 +253,7 @@
               deleteModal.addEventListener('click', function(e) {
                 if (e.target === deleteModal) {
                   deleteModal.style.display = 'none';
-                  currentPostId = null;
+                  window.currentPostId = null;
                 }
               });
             }
