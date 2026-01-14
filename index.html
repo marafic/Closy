@@ -8,9 +8,6 @@
   </head>
   <body>
     <div class="page">
-      <header class="top">
-        <div id="site-header"></div>
-      </header>
 
       <main class="container">
         <div style="max-width:500px;margin:60px auto;">
@@ -66,96 +63,6 @@
             </div>
           </article>
         </div>
-      </main>
-    </div>
-
-    <script src="header.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        var form = document.getElementById('login-form');
-        var usernameInput = document.getElementById('username-input');
-        var passwordInput = document.getElementById('password-input');
-
-        form.addEventListener('submit', function(e) {
-          e.preventDefault();
-
-          var username = usernameInput.value.trim();
-          var password = passwordInput.value;
-
-          // Validate inputs
-          if (!username || !password) {
-            alert('Please enter both username and password');
-            return;
-          }
-
-          // Simple validation: any non-empty username and password accepted
-          // Store username in localStorage for potential future use
-          try {
-            localStorage.setItem('closy-current-user', username);
-          } catch (e) {
-            console.error('Error saving user', e);
-          }
-
-          // Redirect to overview
-          window.location.href = 'overview.html';
-        });
-      });
-    </script>
-  </body>
-</html>
-      <!-- <span style='color:green'>Karten-Übersicht: Total Items, Saved Outfits, Posts Shared, Following</span> -->
-      <section class="cards">
-        <article class="card card--lavender">
-        <div class="card-top"><span class="label">Total Items</span></div>
-            <div class="card-value">0</div>
-            <div class="card-sub">in your closet</div>
-          </article>
-
-          <article class="card card--pink">
-            <div class="card-top"><span class="label">Saved Outfits</span></div>
-            <div class="card-value">0</div>
-            <div class="card-sub">combinations created</div>
-          </article>
-
-          <article class="card card--blue">
-            <div class="card-top"><span class="label">Posts Shared</span></div>
-            <div class="card-value">0</div>
-            <div class="card-sub">with your friends</div>
-          </article>
-
-          <article class="card card--mint">
-            <div class="card-top"><span class="label">Following</span></div>
-            <div class="card-value">0</div>
-            <div class="card-sub">friends connected</div>
-          </article>
-        </section>
-
-        <!-- <span style='color:green'>Panels: Kategorie Breakdown und Top Colors</span> -->
-        <section class="panels">
-          <!-- <span style='color:green'>Kategorie Breakdown Panel</span> -->
-          <div class="panel panel--left">
-            <h3>Category Breakdown</h3>
-            <div id="category-empty" class="empty-illustration">👕</div>
-            <p id="category-empty-msg" class="panel-msg">Start adding items to see your wardrobe breakdown</p>
-            <p id="category-empty-sub" class="panel-sub">Track which categories you have most!</p>
-            <div id="category-breakdown" class="category-breakdown" style="display:none;"></div>
-          </div>
-
-          <!-- <span style='color:green'>Top Colors Panel</span> -->
-          <div class="panel panel--right">
-            <h3>Top Colors</h3>
-            <div id="colors-empty" class="empty-illustration">🎨</div>
-            <p id="colors-empty-msg" class="panel-msg">Add items to discover your color palette</p>
-            <p id="colors-empty-sub" class="panel-sub">See which colors dominate your style!</p>
-            <div id="colors-breakdown" class="category-breakdown" style="display:none;"></div>
-          </div>
-        </section>
-
-        <!-- <span style='color:green'>Style Insights Panel</span> -->
-        <section id="style-insights" class="style-insights" style="display:none;">
-          <h3>Style Insights</h3>
-          <p id="insights-text" class="insights-text"></p>
-        </section>
       </main>
     </div>
 
