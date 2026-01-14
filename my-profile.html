@@ -200,18 +200,26 @@
               // Function to attach delete button listeners (must be defined before use)
               function attachDeleteListeners() {
                 var deleteModal = document.getElementById('delete-modal');
-                document.querySelectorAll('.delete-post').forEach(function(btn) {
-                  // Hover effect for delete button
-                  btn.addEventListener('mouseenter', function() {
+                var deleteButtons = document.querySelectorAll('.delete-post');
+                console.log('Attaching listeners to', deleteButtons.length, 'delete buttons');
+                
+                deleteButtons.forEach(function(btn) {
+                  // Clone button to remove old listeners
+                  var newBtn = btn.cloneNode(true);
+                  btn.parentNode.replaceChild(newBtn, btn);
+                  
+                  // Add fresh listeners to new button
+                  newBtn.addEventListener('mouseenter', function() {
                     this.style.background = '#e9e9ee';
                   });
-                  btn.addEventListener('mouseleave', function() {
+                  newBtn.addEventListener('mouseleave', function() {
                     this.style.background = '#f3f3f6';
                   });
-                  
-                  // Click handler - show confirmation modal
-                  btn.addEventListener('click', function() {
+                  newBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     window.currentPostId = this.getAttribute('data-post-id');
+                    console.log('Delete clicked for post:', window.currentPostId);
                     deleteModal.style.display = 'flex';
                   });
                 });
