@@ -131,27 +131,38 @@
           try {
             // Load posts, filter out the deleted one, save back
             var posts = JSON.parse(localStorage.getItem('closy-user-posts-v1') || '[]');
-            console.log('Posts before delete:', posts.length, posts);
+            console.log('Posts before delete:', posts.length);
+            for (var i = 0; i < posts.length; i++) {
+              console.log('  Post', i, ':', posts[i].id);
+            }
             
-            var originalLength = posts.length;
-            posts = posts.filter(function(p) {
-              console.log('Comparing', p.id, 'with', window.currentPostId, ':', p.id === window.currentPostId);
-              return p.id !== window.currentPostId;
-            });
-            console.log('Posts after filter:', posts.length, posts);
+            var newPosts = [];
+            var found = false;
+            for (var i = 0; i < posts.length; i++) {
+              if (posts[i].id === window.currentPostId) {
+                console.log('FOUND POST TO DELETE:', posts[i].id);
+                found = true;
+              } else {
+                newPosts.push(posts[i]);
+              }
+            }
             
-            if (posts.length === originalLength) {
+            console.log('Posts after filter:', newPosts.length);
+            
+            if (!found) {
               console.warn('No post was deleted - ID not found!');
               alert('Post not found');
               return;
             }
             
-            localStorage.setItem('closy-user-posts-v1', JSON.stringify(posts));
-            console.log('Post deleted successfully');
+            localStorage.setItem('closy-user-posts-v1', JSON.stringify(newPosts));
+            console.log('Post deleted successfully, reloading...');
             
             // Close modal and reload page
             window.hideDeleteModal();
-            location.reload();
+            setTimeout(function() {
+              location.reload();
+            }, 100);
           } catch (e) {
             console.error('Error deleting post:', e);
             alert('Error deleting post: ' + e.message);
