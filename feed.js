@@ -289,14 +289,9 @@
     // Filter posts to only show those from followed users
     const following = loadFollowing();
     const followingUserIds = Object.keys(following);
-    console.log('Following data:', following);
-    console.log('Following user IDs:', followingUserIds);
-    console.log('All posts:', allPosts.map(function(p){ return {id: p.id, authorId: p.authorId}; }));
     
     const followingPosts = allPosts.filter(function(post){ 
-      const isFollowing = followingUserIds.indexOf(post.authorId) !== -1;
-      console.log('Post', post.id, 'by', post.authorId, '- following:', isFollowing);
-      return isFollowing;
+      return followingUserIds.indexOf(post.authorId) !== -1;
     });
     
     const emptySection = container.querySelector('.empty-closet');

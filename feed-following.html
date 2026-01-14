@@ -21,7 +21,6 @@
           <a class="tab" href="feed.html">Feed</a>
         </nav>
       </header>
-    <script src="header.js"></script>
 
       <main class="container">
         <div class="feed-tabs">
@@ -45,5 +44,13 @@
 
     </div>
     <script src="feed.js"></script>
+    <script>
+      // Render posts from followed users when page loads
+      document.addEventListener('DOMContentLoaded', function(){
+        if(typeof window.renderFollowingFeed === 'function'){
+          window.renderFollowingFeed();
+        }
+      });
+    </script>
   </body>
 </html>
